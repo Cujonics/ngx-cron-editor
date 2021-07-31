@@ -2,6 +2,17 @@
 
 .cron-editor-main {
   @include mat-elevation(1);
+  width: 100%;
+}
+
+.minutes-section {
+  display: inline-block;
+  .cron-form-label, cron-time-picker {
+    display: inline;
+  }
+  .cron-form-label {
+    margin: 5px;
+  }
 }
 
 .cron-editor-main .cron-editor-container {
