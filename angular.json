@@ -121,11 +121,13 @@
           },
           "configurations": {
             "production": {
-              "project": "libs/ngx-cron-editor/ng-package.prod.json"
-            ,              "tsConfig": "libs/ngx-cron-editor/tsconfig.lib.prod.json"
-}
+              "project": "libs/ngx-cron-editor/ng-package.prod.json",
+              "tsConfig": "libs/ngx-cron-editor/tsconfig.lib.prod.json"
+            }
           },
-          "styles": ["libs/ngx-cron-editor/src/cron-editor-theme.scss"]
+          "styles": [
+            "libs/ngx-cron-editor/src/cron-editor-theme.scss"
+          ]
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -140,5 +142,8 @@
       }
     }
   },
-  "defaultProject": "ngx-cron-editor"
+  "defaultProject": "ngx-cron-editor",
+  "cli": {
+    "analytics": false
+  }
 }
