@@ -2,20 +2,11 @@
   <mat-tab-group class="cron-editor-container" (selectedIndexChange)="onTabFocus($event)"
                  [backgroundColor]="backgroundColor" [color]="color">
 
-    <ng-container *ngFor="let tab of ['Minutes', 'Hourly', 'Daily', 'Weekly', 'Monthly', 'Yearly']">
-      <mat-tab class="cron-editor-tab" label="{{tab}}" *ngIf="!options['hide' + tab + 'tab']">
+<!--    <ng-container *ngFor="let tab of ['Minutes', 'Hourly', 'Daily', 'Weekly', 'Monthly', 'Yearly']">-->
+<!--      <mat-tab class="cron-editor-tab" label="{{tab}}" *ngIf="!options['hide' + tab + 'tab']">-->
 
-      </mat-tab>
-    </ng-container>
-
-    <mat-tab class="cron-editor-tab"  label="Minutes dynamic">
-      <cron-time-picker
-        [formGroup]="minutesForm"
-        [use24HourTime]="options.use24HourTime"
-        [hideHours]="true"
-        [hideSeconds]="options.hideSeconds || !isCronFlavorQuartz">
-      </cron-time-picker>
-    </mat-tab>
+<!--      </mat-tab>-->
+<!--    </ng-container>-->
 
     <!-- Minute -->
     <mat-tab class="cron-editor-tab" label="Minutes" *ngIf="!options.hideMinutesTab">
