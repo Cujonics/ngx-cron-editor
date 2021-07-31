@@ -1,7 +1,7 @@
-import {Component, Input, Output, OnInit, OnChanges, SimpleChanges, EventEmitter, forwardRef} from '@angular/core';
+import {Component, forwardRef, Input, OnInit} from '@angular/core';
 import {CronOptions} from './CronOptions';
-import {Days, MonthWeeks, Months} from './enums';
-import {ControlContainer, ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {Days, Months, MonthWeeks} from './enums';
+import {ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {ThemePalette} from '@angular/material/core';
 
 
@@ -13,6 +13,7 @@ export const CRON_VALUE_ACCESSOR: any = {
 
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'cron-editor',
   templateUrl: './cron-editor.template.html',
   styleUrls: ['./cron-editor.component.css'],
@@ -24,6 +25,25 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
   @Input() public color: ThemePalette;
   @Input() public disabled: boolean;
   @Input() public options: CronOptions;
+  public activeTab: string;
+  public selectOptions = this.getSelectOptions();
+
+  // the name is an Angular convention, @Input variable name + "Change" suffix
+  // @Output() cronChange = new EventEmitter();
+  public state: any;
+  cronForm: FormControl;
+  minutesForm: FormGroup;
+  hourlyForm: FormGroup;
+  dailyForm: FormGroup;
+  weeklyForm: FormGroup;
+  monthlyForm: FormGroup;
+  yearlyForm: FormGroup;
+  advancedForm: FormGroup;
+  private localCron = '0 0 1/1 * *';
+  private isDirty: boolean;
+
+  constructor(private fb: FormBuilder) {
+  }
 
   @Input() get cron(): string {
     return this.localCron;
@@ -33,27 +53,6 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
     this.localCron = value;
     this.onChange(value);
   }
-
-  // the name is an Angular convention, @Input variable name + "Change" suffix
-  // @Output() cronChange = new EventEmitter();
-
-  public activeTab: string;
-  public selectOptions = this.getSelectOptions();
-  public state: any;
-
-  private localCron = '0 0 1/1 * *';
-  private isDirty: boolean;
-
-  cronForm: FormControl;
-
-  minutesForm: FormGroup;
-  hourlyForm: FormGroup;
-  dailyForm: FormGroup;
-  weeklyForm: FormGroup;
-  monthlyForm: FormGroup;
-  yearlyForm: FormGroup;
-  advancedForm: FormGroup;
-
 
   get isCronFlavorQuartz() {
     return this.options.cronFlavor === 'quartz';
@@ -73,10 +72,6 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
 
   get monthDayDefaultChar() {
     return this.options.cronFlavor === 'quartz' ? '?' : '*';
-  }
-
-
-  constructor(private fb: FormBuilder) {
   }
 
   /* Update the cron output to that of the selected tab.
@@ -219,6 +214,55 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
     this.advancedForm.controls.expression.valueChanges.subscribe(next => this.computeAdvancedExpression(next));
   }
 
+  public dayDisplay(day: string): string {
+    return Days[day];
+  }
+
+  public monthWeekDisplay(monthWeekNumber: string): string {
+    return MonthWeeks[monthWeekNumber];
+  }
+
+  public monthDisplay(month: number): string {
+    return Months[month];
+  }
+
+  public monthDayDisplay(month: string): string {
+    if (month === 'L') {
+      return 'Last Day';
+    } else if (month === 'LW') {
+      return 'Last Weekday';
+    } else if (month === '1W') {
+      return 'First Weekday';
+    } else {
+      return `${month}${this.getOrdinalSuffix(month)}`;
+    }
+  }
+
+  /*
+   * ControlValueAccessor
+   */
+  onChange = (_: any) => {
+  };
+
+  onTouched = () => {
+  };
+
+  writeValue(obj: string): void {
+    this.cron = obj;
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+  }
+
   private computeMinutesCron(state: any) {
     this.cron = `${this.isCronFlavorQuartz ? state.seconds : ''} 0/${state.minutes} * 1/1 * ${this.weekDayDefaultChar} ${this.yearDefaultChar}`.trim();
     this.cronForm.setValue(this.cron);
@@ -282,30 +326,6 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
   private computeAdvancedExpression(expression: any) {
     this.cron = expression;
     this.cronForm.setValue(this.cron);
-  }
-
-  public dayDisplay(day: string): string {
-    return Days[day];
-  }
-
-  public monthWeekDisplay(monthWeekNumber: string): string {
-    return MonthWeeks[monthWeekNumber];
-  }
-
-  public monthDisplay(month: number): string {
-    return Months[month];
-  }
-
-  public monthDayDisplay(month: string): string {
-    if (month === 'L') {
-      return 'Last Day';
-    } else if (month === 'LW') {
-      return 'Last Weekday';
-    } else if (month === '1W') {
-      return 'First Weekday';
-    } else {
-      return `${month}${this.getOrdinalSuffix(month)}`;
-    }
   }
 
   private getAmPmHour(hour: number) {
@@ -451,7 +471,6 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
     return false;
   }
 
-
   private getDefaultState() {
     const [defaultHours, defaultMinutes, defaultSeconds] = this.options.defaultTime.split(':').map(Number);
 
@@ -580,31 +599,6 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
   private getRange(start: number, end: number): number[] {
     const length = end - start + 1;
     return Array.apply(null, Array(length)).map((_, i) => i + start);
-  }
-
-
-  /*
-   * ControlValueAccessor
-   */
-  onChange = (_: any) => {
-  };
-  onTouched = () => {
-  };
-
-  writeValue(obj: string): void {
-    this.cron = obj;
-  }
-
-  registerOnChange(fn: any): void {
-    this.onChange = fn;
-  }
-
-  registerOnTouched(fn: any): void {
-    this.onTouched = fn;
-  }
-
-  setDisabledState(isDisabled: boolean): void {
-    this.disabled = isDisabled;
   }
 
 }

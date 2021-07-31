@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AppComponent } from './app.component';
-import {CronEditorModule} from 'ngx-cron-editor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatCardModule} from '@angular/material/card';
 import {MatSelectModule} from '@angular/material/select';
@@ -13,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { LayoutModule } from '@angular/cdk/layout';
 import {CommonModule} from '@angular/common';
+import {CronEditorModule} from '../../../../libs/ngx-cron-editor/src/cron-editor.module';
 
 @NgModule({
   imports: [
@@ -29,7 +29,8 @@ import {CommonModule} from '@angular/common';
     MatIconModule,
     MatButtonModule,
     LayoutModule,
-    CronEditorModule],
+    CronEditorModule
+  ],
   declarations: [AppComponent],
   providers: [],
   bootstrap: [AppComponent]
