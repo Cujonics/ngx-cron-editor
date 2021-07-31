@@ -16,7 +16,7 @@ export const CRON_VALUE_ACCESSOR: any = {
   // tslint:disable-next-line:component-selector
   selector: 'cron-editor',
   templateUrl: './cron-editor.template.html',
-  styleUrls: ['./cron-editor.component.css'],
+  styleUrls: ['./cron-editor.component.scss'],
   providers: [CRON_VALUE_ACCESSOR]
 })
 export class CronGenComponent implements OnInit, ControlValueAccessor {
