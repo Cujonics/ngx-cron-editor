@@ -1,22 +1,129 @@
 @import '~@angular/material/theming';
 
+@mixin pierceThroughViewEncapsulation() {
+  :host {
+    ::ng-deep {
+      @content
+    }
+  }
+}
+
 .cron-editor-main {
   @include mat-elevation(1);
   width: 100%;
 }
 
-.minutes-section {
+.minutes-section, .hourly-section {
   display: inline-block;
+
   .cron-form-label, cron-time-picker {
     display: inline;
   }
+}
+
+.weekly-section {
   .cron-form-label {
-    margin: 5px;
+    margin-bottom: -5px;
+  }
+
+  .cron-form-days-group {
+    margin-top: 10px;
+  }
+
+  .time-label {
+    margin-bottom: 5px;
   }
 }
 
-.cron-editor-main .cron-editor-container {
+.cron-form-label {
+  margin-left: 5px;
+  margin-right: 5px;
 }
+
+.separator {
+  margin-left: 3px;
+  margin-right: 3px;
+  font-size: 20px;
+}
+
+@include pierceThroughViewEncapsulation {
+
+  /* Generic Material Overrides */
+  .mat-tab-body-content {
+    padding-left: 10px;
+  }
+  .mat-tab-label-container {
+    display: flex;
+    justify-content: space-evenly;
+  }
+  .mat-tab-labels {
+    justify-content: space-around;
+  }
+  .mat-tab-label {
+    min-width: 100px;
+  }
+  .mat-radio-label-content {
+    padding-top: 10px;
+  }
+  mat-radio-button {
+    opacity: 0.4;
+
+    &.mat-radio-checked {
+      opacity: 1.0;
+    }
+  }
+
+  /* Specific Material Overrides */
+  .daily-section {
+    mat-form-field {
+      width: 10%;
+    }
+  }
+
+  .monthly-section, .yearly-section {
+    padding-left: 10px;
+    overflow: hidden;
+
+    .specific-weekday > .month {
+      width: 9%;
+    }
+
+    .specific-weekday, .specific-day, .specific-monthWeek, .specific-monthDay {
+      display: flex;
+      align-items: baseline;
+      width: 100%;
+
+      mat-form-field {
+        max-width: 10%;
+        width: auto;
+
+        &.month {
+          max-width: 11%;
+        }
+        &.day, {
+          width: 9%;
+        }
+        &.week {
+          width: 7%;
+        }
+      }
+
+      span.inline-prefix {
+        margin-right: 5px;
+        margin-left: 5px;
+      }
+    }
+  }
+
+}
+
+.picker-separator {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+
+// OLD
 
 .cron-editor-tab-content {
   height: 200px;
@@ -42,32 +149,6 @@
 .cron-editor-main .cron-editor-container .inline-block {
   display: inline-block;
 }
-
-.cron-editor-main .cron-editor-container .minutes,
-.cron-editor-main .cron-editor-container .hours,
-.cron-editor-main .cron-editor-container .days,
-.cron-editor-main .cron-editor-container .seconds {
-
-}
-
-.cron-editor-main .cron-editor-container .months {
- }
-
-.cron-editor-main .cron-editor-container .month-days {
-
-}
-
-.cron-editor-main .cron-editor-container .months-small {
- }
-
-.cron-editor-main .cron-editor-container .day-order-in-month {
- }
-
-.cron-editor-main .cron-editor-container .week-days {
- }
-
-.cron-editor-main .cron-editor-container .advanced-cron-editor-input {
- }
 
 .cron-editor-main .cron-editor-container .hour-types {
   width: 70px;

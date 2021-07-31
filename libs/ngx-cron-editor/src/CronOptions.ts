@@ -5,6 +5,7 @@ export interface CronOptions {
   formCheckboxClass: string;
 
   formPrefixes?: CronPrefixes;
+  reactive?: boolean;
 
   defaultTime: string,
 
@@ -28,4 +29,16 @@ interface CronPrefixes {
   minutePrefix?: string;
   hourPrefix?: string;
   dayPrefix?: string;
+  weekDayPrefix?: string;
+
+  weeklyPrefix?: string;
+  weeklyHourPrefix?: string;
+
+  monthlyDayPrefix?: string;
+  monthlyMonthPrefix?: string;
+  monthlyHourPrefix?: string;
+
+  yearlyDayPrefix?: string;
+  yearlyMonthPrefix?: string;
+  yearlyTimePrefix?: string;
 }
