@@ -32,7 +32,7 @@ interface CronTextOptions {
 
   specificDayPrefix?: string; // Default: On the
   yearlyMonthPrefix?: string; // Default: of
-  monthlyMonthPrefix?: string; // of every
+  monthlyMonthPrefix?: string; // Default: of every
 
   weeklyDayTitle?: string; // Default: Day(s)
   weeklyTimeTitle?: string; // Default: Time
