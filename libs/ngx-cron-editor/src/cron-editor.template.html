@@ -5,7 +5,7 @@
     <!-- Minute -->
     <mat-tab class="cron-editor-tab minutes-tab" label="Minutes" *ngIf="!options.hideMinutesTab">
       <div class="cron-editor-tab-content minutes-content">
-        <p class="cron-form-label">{{ options?.formPrefixes?.frequencyPrefix || 'Every' }}</p>
+        <p class="cron-form-label">{{ options?.texts?.frequencyPrefix || 'Every' }}</p>
         <cron-time-picker
           [formGroup]="minutesForm"
           [use24HourTime]="true"
@@ -18,7 +18,7 @@
     <!-- Hourly -->
     <mat-tab class="cron-editor-tab hourly-tab" label="Hourly" *ngIf="!options.hideHourlyTab">
       <div class="cron-editor-tab-content hourly-content">
-        <p class="cron-form-label">{{ options?.formPrefixes?.frequencyPrefix || 'Every' }}</p>
+        <p class="cron-form-label">{{ options?.texts?.frequencyPrefix || 'Every' }}</p>
         <cron-time-picker [formGroup]="hourlyForm"
                           [use24HourTime]="options.use24HourTime"
                           [hideSeconds]="options.hideSeconds ||  !isCronFlavorQuartz">
@@ -34,7 +34,7 @@
           <!-- Day Frequency -->
           <mat-radio-button name="subTab" class="cron-editor-radio-button frequency-group" value="everyDays"
                             checked="checked">
-            <p class="cron-form-label">{{options?.formPrefixes?.dayPrefix || 'Every'}} </p>
+            <p class="cron-form-label">{{options?.texts?.frequencyPrefix || 'Every'}} </p>
 
             <mat-form-field formGroupName="everyDays" class="day-picker col-md-4">
               <mat-label>Day(s)</mat-label>
@@ -45,7 +45,7 @@
               </mat-select>
             </mat-form-field>
 
-            <p class="cron-form-label">{{options?.formPrefixes?.timePrefix || 'at'}} </p>
+            <p class="cron-form-label">{{options?.texts?.timePrefix || 'at'}} </p>
 
             <cron-time-picker
               formGroupName="everyDays"
@@ -57,7 +57,7 @@
 
           <!-- Every Work Day -->
           <mat-radio-button name="subTab" class="cron-editor-radio-button frequency-group" value="everyWeekDay">
-            <p class="cron-form-label">{{options?.formPrefixes?.weekDayPrefix || 'Every working day at'}} </p>
+            <p class="cron-form-label">{{options?.texts?.weekDayPrefix || 'Every working day at'}} </p>
 
             <cron-time-picker
               formGroupName="everyWeekDay"
@@ -73,7 +73,7 @@
     <!-- Weekly -->
     <mat-tab class="cron-editor-tab weekly-tab" label="Weekly" *ngIf="!options.hideWeeklyTab">
       <div class="cron-editor-tab-content weekly-content">
-        <h2 class="cron-form-label">{{ options?.formPrefixes?.weeklyDayTitle || 'Day(s)' }}</h2>
+        <h2 class="cron-form-label">{{ options?.texts?.weeklyDayTitle || 'Day(s)' }}</h2>
         <div class="cron-form-days-group" [formGroup]="weeklyForm">
           <mat-checkbox
             *ngFor="let day of weekdays"
@@ -85,7 +85,7 @@
 
         <hr>
 
-        <h2 class="cron-form-label time-label">{{ options?.formPrefixes?.weeklyTimeTitle || 'Time'}}</h2>
+        <h2 class="cron-form-label time-label">{{ options?.texts?.weeklyTimeTitle || 'Time'}}</h2>
 
         <cron-time-picker [formGroup]="weeklyForm"
                           [use24HourTime]="options.use24HourTime"
@@ -102,7 +102,7 @@
 
           <!-- Specific day -->
           <mat-radio-button name="monthly-radio" class="cron-editor-radio-button frequency-group" value="specificDay" formGroupName="specificDay">
-              <p class="cron-form-label">{{ options?.formPrefixes?.monthlyDayPrefix || 'On the'}}</p>
+              <p class="cron-form-label">{{ options?.texts?.specificDayPrefix || 'On the'}}</p>
 
             <mat-form-field class="day-picker">
               <mat-label>Day</mat-label>
@@ -125,7 +125,7 @@
               </mat-select>
             </mat-form-field>
 
-              <p class="cron-form-label">{{ options?.formPrefixes?.monthlyHourPrefix || 'of every'}}</p>
+              <p class="cron-form-label">{{ options?.texts?.monthlyMonthPrefix || 'of every'}}</p>
 
             <mat-form-field class="month-picker">
               <mat-label>Month</mat-label>
@@ -136,17 +136,23 @@
               </mat-select>
             </mat-form-field>
 
-              <p class="cron-form-label">{{ options?.formPrefixes?.monthlyHourPrefix || 'at'}}</p>
+              <p class="cron-form-label">{{ options?.texts?.timePrefix || 'at'}}</p>
 
               <cron-time-picker [disabled]="disabled" [formGroup]="monthlyForm.controls.specificDay"
                                 [use24HourTime]="options.use24HourTime"
                                 [hideSeconds]="options.hideSeconds || !isCronFlavorQuartz">
               </cron-time-picker>
+
+            <mat-checkbox
+              formControlName="nearestWeekday"
+              class="checkbox-margin">
+              {{ options?.texts?.nearestWeekdayText || 'during the nearest weekday'}}
+            </mat-checkbox>
           </mat-radio-button>
 
           <!-- Specific Week day -->
           <mat-radio-button name="monthly-radio" class="cron-editor-radio-button frequency-group" value="specificWeekDay" formGroupName="specificWeekDay">
-            <p class="cron-form-label">{{ options?.formPrefixes?.monthlyDayPrefix || 'On the'}}</p>
+            <p class="cron-form-label">{{ options?.texts?.specificDayPrefix || 'On the'}}</p>
 
             <mat-form-field class="week-picker">
               <mat-label>Week</mat-label>
@@ -167,7 +173,7 @@
               </mat-select>
             </mat-form-field>
 
-            <p class="cron-form-label">{{ options?.formPrefixes?.monthlyHourPrefix || 'of every'}}</p>
+            <p class="cron-form-label">{{ options?.texts?.monthlyMonthPrefix || 'of every'}}</p>
 
             <mat-form-field class="month-picker">
               <mat-label>Month</mat-label>
@@ -178,7 +184,7 @@
               </mat-select>
             </mat-form-field>
 
-            <p class="cron-form-label">{{ options?.formPrefixes?.monthlyHourPrefix || 'at'}}</p>
+            <p class="cron-form-label">{{ options?.texts?.timePrefix || 'at'}}</p>
 
             <cron-time-picker [formGroup]="monthlyForm.controls.specificWeekDay"
                               [use24HourTime]="options.use24HourTime"
@@ -197,7 +203,7 @@
 
           <!-- Specific Month Day -->
           <mat-radio-button name="yearly-radio"  class="cron-editor-radio-button frequency-group" value="specificMonthDay">
-            <p class="cron-form-label">{{ options?.formPrefixes?.yearlyDayPrefix || 'On the'}}</p>
+            <p class="cron-form-label">{{ options?.texts?.specificDayPrefix || 'On the'}}</p>
 
             <mat-form-field class="day-picker" formGroupName="specificMonthDay" *ngIf="options.cronFlavor === 'quartz'">
               <mat-label>Day</mat-label>
@@ -219,7 +225,7 @@
               </mat-select>
             </mat-form-field>
 
-            <p class="cron-form-label">{{ options?.formPrefixes?.yearlyMonthPrefix || 'of'}}</p>
+            <p class="cron-form-label">{{ options?.texts?.yearlyMonthPrefix || 'of'}}</p>
 
             <mat-form-field class="month-picker" formGroupName="specificMonthDay">
               <mat-label>Month</mat-label>
@@ -230,19 +236,25 @@
               </mat-select>
             </mat-form-field>
 
-            <p class="cron-form-label">{{ options?.formPrefixes?.yearlyTimePrefix || 'at'}}</p>
+            <p class="cron-form-label">{{ options?.texts?.timePrefix || 'at'}}</p>
 
             <cron-time-picker [disabled]="disabled"
                               [formGroup]="yearlyForm.controls.specificMonthDay"
                               [use24HourTime]="options.use24HourTime"
                               [hideSeconds]="options.hideSeconds || !isCronFlavorQuartz">
             </cron-time-picker>
+
+            <mat-checkbox
+              formControlName="nearestWeekday"
+              class="checkbox-margin">
+              {{ options?.texts?.nearestWeekdayText || 'during the nearest weekday'}}
+            </mat-checkbox>
           </mat-radio-button>
 
           <!-- Specific Month Week -->
           <mat-radio-button name="yearly-radio"  class="cron-editor-radio-button frequency-group" value="specificMonthWeek">
 
-            <p class="cron-form-label">{{ options?.formPrefixes?.yearlyDayPrefix || 'On the'}}</p>
+            <p class="cron-form-label">{{ options?.texts?.specificDayPrefix || 'On the'}}</p>
 
             <mat-form-field class="week-picker" formGroupName="specificMonthWeek">
               <mat-label>Week</mat-label>
@@ -262,7 +274,7 @@
               </mat-select>
             </mat-form-field>
 
-            <p class="cron-form-label">{{ options?.formPrefixes?.yearlyMonthPrefix || 'of'}}</p>
+            <p class="cron-form-label">{{ options?.texts?.yearlyMonthPrefix || 'of'}}</p>
 
             <mat-form-field class="month-picker" formGroupName="specificMonthWeek">
               <mat-label>Month</mat-label>
@@ -273,7 +285,7 @@
               </mat-select>
             </mat-form-field>
 
-            <p class="cron-form-label">{{ options?.formPrefixes?.yearlyDayPrefix || 'at'}}</p>
+            <p class="cron-form-label">{{ options?.texts?.timePrefix || 'at'}}</p>
 
             <cron-time-picker [disabled]="disabled"
                               [formGroup]="yearlyForm.controls.specificMonthWeek"

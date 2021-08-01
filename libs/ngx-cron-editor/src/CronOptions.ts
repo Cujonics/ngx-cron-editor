@@ -4,7 +4,7 @@ export interface CronOptions {
   formRadioClass: string;
   formCheckboxClass: string;
 
-  formPrefixes?: CronPrefixes;
+  texts?: CronTextOptions;
   reactive?: boolean;
 
   defaultTime: string,
@@ -25,25 +25,17 @@ export interface CronOptions {
   cronFlavor: string;
 }
 
-interface CronPrefixes {
-  frequencyPrefix?: string;
-  timePrefix?: string;
-  weeklyDayTitle?: string;
-  weeklyTimeTitle?: string;
+interface CronTextOptions {
+  frequencyPrefix?: string; // Default: every
+  timePrefix?: string; // Default: at
+  weekDayPrefix?: string; // Default: Every working day at
 
-  minutePrefix?: string;
-  hourPrefix?: string;
-  dayPrefix?: string;
-  weekDayPrefix?: string;
+  specificDayPrefix?: string; // Default: On the
+  yearlyMonthPrefix?: string; // Default: of
+  monthlyMonthPrefix?: string; // of every
 
-  weeklyPrefix?: string;
-  weeklyHourPrefix?: string;
+  weeklyDayTitle?: string; // Default: Day(s)
+  weeklyTimeTitle?: string; // Default: Time
 
-  monthlyDayPrefix?: string;
-  monthlyMonthPrefix?: string;
-  monthlyHourPrefix?: string;
-
-  yearlyDayPrefix?: string;
-  yearlyMonthPrefix?: string;
-  yearlyTimePrefix?: string;
+  nearestWeekdayText?: string; // Default: during the nearest weekday
 }
