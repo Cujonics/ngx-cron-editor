@@ -8,7 +8,7 @@
         <p class="cron-form-label">{{ options?.formPrefixes?.frequencyPrefix || 'Every' }}</p>
         <cron-time-picker
           [formGroup]="minutesForm"
-          [use24HourTime]="options.use24HourTime"
+          [use24HourTime]="true"
           [hideHours]="true"
           [hideSeconds]="options.hideSeconds || !isCronFlavorQuartz">
         </cron-time-picker>
