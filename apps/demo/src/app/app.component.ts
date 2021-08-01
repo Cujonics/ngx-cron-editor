@@ -21,17 +21,17 @@ export class AppComponent implements OnInit {
 
     defaultTime: '00:00:00',
 
-    hideMinutesTab: false,
-    hideHourlyTab: false,
-    hideDailyTab: false,
-    hideWeeklyTab: false,
+    hideMinutesTab: true,
+    hideHourlyTab: true,
+    hideDailyTab: true,
+    hideWeeklyTab: true,
     hideMonthlyTab: false,
     hideYearlyTab: false,
     hideAdvancedTab: true,
     hideSpecificWeekDayTab: false,
     hideSpecificMonthWeekTab: false,
 
-    use24HourTime: false,
+    use24HourTime: true,
     hideSeconds: false,
 
     cronFlavor: 'standard'
