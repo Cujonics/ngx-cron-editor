@@ -16,6 +16,8 @@
 .cron-editor-tab-content {
   margin-top: 10px;
   overflow: hidden;
+  height: 200px;
+  border-radius: 8px;
   h2 {
     margin-bottom: 5px;
   }
@@ -23,6 +25,14 @@
     margin: 10px 10px 5px 10px;
     font-size: 20px;
   }
+}
+
+.nav-tabs li a {
+  cursor: pointer;
+}
+
+.checkbox-margin {
+  margin: 0 10px;
 }
 
 .minutes-content, .hourly-content {
@@ -84,22 +94,21 @@
 
   /* Specific Material Overrides */
 
-  .daily-content, .weekly-content, .yearly-content {
-    .mat-form-field {
-      max-width: 100px;
-    }
+  .monthly-content .mat-form-field, .yearly-content .mat-form-field {
+    max-width: 90px;
   }
 
   .monthly-content, .yearly-content {
-    .mat-form-field {
-      max-width: 90px;
-    }
     .weekday-picker {
       margin-left: 5px;
     }
     .month-picker, .weekday-picker {
       max-width: 125px;
     }
+  }
+  
+  .daily-content .mat-form-field, .weekly-content .mat-form-field, .yearly-content .mat-form-field {
+    max-width: 100px;
   }
 
   .daily-content cron-time-picker .mat-form-field,
@@ -108,53 +117,4 @@
   .yearly-content cron-time-picker .mat-form-field {
     max-width: 75px;
   }
-}
-
-
-// OLD
-
-.cron-editor-tab-content {
-  height: 200px;
-  border-radius: 8px;
-}
-
-.cron-editor-main .cron-editor-container .cron-editor-radio {
-  width: 20px;
-  //display: inline-block;
-}
-
-.cron-editor-main .cron-editor-container .cron-editor-select,
-.cron-editor-main .cron-editor-container .cron-editor-input,
-.cron-editor-main .cron-editor-container .cron-editor-checkbox {
-  display: inline-block;
-}
-
-.cron-editor-main .cron-editor-container .well-time-wrapper {
-  padding-left: 20px;
-}
-
-.cron-editor-main .cron-editor-container .inline-block {
-  display: inline-block;
-}
-
-.cron-editor-main .cron-editor-container .hour-types {
-  width: 70px;
-}
-
-.nav-tabs li a {
-  cursor: pointer;
-}
-
-.cron-editor-radio-group {
-  display: flex;
-  flex-direction: column;
-  margin: 15px 0;
-}
-
-.cron-editor-radio-button {
-  margin: 5px;
-}
-
-.checkbox-margin {
-  margin: 0 10px;
 }
