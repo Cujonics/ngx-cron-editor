@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
 
     defaultTime: '00:00:00',
 
-    hideMinutesTab: true,
+    hideMinutesTab: false,
     hideHourlyTab: false,
     hideDailyTab: false,
     hideWeeklyTab: false,

@@ -28,6 +28,8 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
   public activeTab: string;
   public selectOptions = this.getSelectOptions();
 
+  public weekdays: string[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+
   // the name is an Angular convention, @Input variable name + "Change" suffix
   // @Output() cronChange = new EventEmitter();
   public state: any;

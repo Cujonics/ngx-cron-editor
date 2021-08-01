@@ -62,64 +62,69 @@
   .mat-tab-label {
     min-width: 100px;
   }
+
+  .frequency-group {
+    display: inline-flex;
+  }
+
+  .mat-radio-container {
+    display: inline-flex;
+  }
   .mat-radio-label-content {
     padding-top: 10px;
+    display: inline-flex;
+    align-items: baseline;
   }
   mat-radio-button {
-    opacity: 0.4;
-
-    &.mat-radio-checked {
-      opacity: 1.0;
+    overflow: hidden;
+    max-width: 100%;
+    padding-left: 10px;
+    &:not(.mat-radio-checked) {
+      opacity: 0.4;
     }
   }
 
   /* Specific Material Overrides */
-  .daily-section {
-    mat-form-field {
-      width: 10%;
-    }
+  .cron-form-label {
+    font-weight: 500;
   }
 
-  .monthly-section, .yearly-section {
-    padding-left: 10px;
+  .cron-editor-tab-content {
+    margin-top: 10px;
     overflow: hidden;
-
-    .specific-weekday > .month {
-      width: 9%;
+    h2 {
+      margin-bottom: 5px;
     }
-
-    .specific-weekday, .specific-day, .specific-monthWeek, .specific-monthDay {
-      display: flex;
-      align-items: baseline;
-      width: 100%;
-
-      mat-form-field {
-        max-width: 10%;
-        width: auto;
-
-        &.month {
-          max-width: 11%;
-        }
-        &.day, {
-          width: 9%;
-        }
-        &.week {
-          width: 7%;
-        }
-      }
-
-      span.inline-prefix {
-        margin-right: 5px;
-        margin-left: 5px;
-      }
+    hr {
+      margin-top: 10px;
     }
   }
 
-}
+  .daily-content, .weekly-content, .yearly-content {
+    .mat-form-field {
+      max-width: 100px;
+    }
+  }
 
-.picker-separator {
-  margin-left: 5px;
-  margin-right: 5px;
+  .monthly-content, .yearly-content {
+    .mat-form-field {
+      max-width: 90px;
+    }
+    .weekday-picker {
+      margin-left: 5px;
+    }
+    .month-picker, .weekday-picker {
+      max-width: 125px;
+    }
+  }
+
+  .daily-content, .weekly-content, .monthly-content, .yearly-content {
+     cron-time-picker {
+      .mat-form-field {
+        max-width: 75px;
+      }
+    }
+  }
 }
 
 
@@ -127,13 +132,12 @@
 
 .cron-editor-tab-content {
   height: 200px;
-  margin-top: 24px;
   border-radius: 8px;
 }
 
 .cron-editor-main .cron-editor-container .cron-editor-radio {
   width: 20px;
-  display: inline-block;
+  //display: inline-block;
 }
 
 .cron-editor-main .cron-editor-container .cron-editor-select,

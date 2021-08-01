@@ -26,6 +26,11 @@ export interface CronOptions {
 }
 
 interface CronPrefixes {
+  frequencyPrefix?: string;
+  timePrefix?: string;
+  weeklyDayTitle?: string;
+  weeklyTimeTitle?: string;
+
   minutePrefix?: string;
   hourPrefix?: string;
   dayPrefix?: string;
