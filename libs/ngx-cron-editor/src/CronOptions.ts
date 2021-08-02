@@ -1,28 +1,31 @@
 export interface CronOptions {
-  formInputClass: string;
-  formSelectClass: string;
-  formRadioClass: string;
-  formCheckboxClass: string;
+  formInputClass?: string;
+
+  formRadioClass?: string; // Default: cron-editor-radio-button frequency-group
+  formCheckboxClass?: string; // Default: checkbox-margin
+  formSelectClass?: string; // Default: form-control cron-editor-input
 
   texts?: CronTextOptions;
   reactive?: boolean;
 
-  defaultTime: string,
+  defaultTime?: string,
 
-  hideMinutesTab: boolean;
-  hideHourlyTab: boolean;
-  hideDailyTab: boolean;
-  hideWeeklyTab: boolean;
-  hideMonthlyTab: boolean;
-  hideYearlyTab: boolean;
-  hideAdvancedTab: boolean;
-  hideSpecificWeekDayTab: boolean;
-  hideSpecificMonthWeekTab: boolean;
+  hideMinutesTab?: boolean;
+  hideHourlyTab?: boolean;
+  hideDailyTab?: boolean;
+  hideWeeklyTab?: boolean;
+  hideMonthlyTab?: boolean;
+  hideYearlyTab?: boolean;
+  hideAdvancedTab?: boolean;
+  hideSpecificWeekDayTab?: boolean;
+  hideSpecificMonthWeekTab?: boolean;
+  hideNearestWeekdayCheck?: boolean;
 
-  use24HourTime: boolean;
-  hideSeconds: boolean;
+  use24HourTime?: boolean;
+  hideSeconds?: boolean;
 
   cronFlavor: string;
+  useGuru?: boolean;
 }
 
 interface CronTextOptions {
