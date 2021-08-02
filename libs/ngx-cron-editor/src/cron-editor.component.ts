@@ -274,6 +274,39 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
     this.disabled = isDisabled;
   }
 
+  /* Unit Testing Functions Start  */
+  public _testComputeMinutesCron(state: any) {
+    this.computeMinutesCron(state);
+    return this.cron;
+  }
+
+  public _testComputeHourlyCron(state: any) {
+    this.computeHourlyCron(state);
+    return this.cron;
+  }
+
+  public _testComputeDailyCron(state: any) {
+    this.computeDailyCron(state);
+    return this.cron;
+  }
+
+  public _testComputeWeeklyCron(state: any) {
+    this.computeWeeklyCron(state);
+    return this.cron;
+  }
+
+  public _testComputeMonthlyCron(state: any) {
+    this.computeMonthlyCron(state);
+    return this.cron;
+  }
+
+  public _testComputeYearlyCron(state: any) {
+    this.computeYearlyCron(state);
+    return this.cron;
+  }
+
+  /* Unit Testing Functions End */
+
   private computeMinutesCron(state: any) {
     this.cron = `${this.isCronFlavorQuartz && !this.removeSeconds ? state.seconds : ''} 0/${state.minutes} * 1/1 * ${this.weekDayDefaultChar} ${this.yearDefaultChar}`.trim();
     this.cronForm.setValue(this.cron);
