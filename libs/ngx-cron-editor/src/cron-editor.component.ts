@@ -63,6 +63,14 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
     return this.options.cronFlavor === 'standard';
   }
 
+  get removeSeconds() {
+    return !!this.options.removeSeconds
+  }
+
+  get removeYears() {
+    return !!this.options.removeYears;
+  }
+
   get yearDefaultChar() {
     return this.options.cronFlavor === 'quartz' ? '*' : '';
   }
@@ -267,7 +275,7 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
   }
 
   private computeMinutesCron(state: any) {
-    this.cron = `${this.isCronFlavorQuartz ? state.seconds : ''} 0/${state.minutes} * 1/1 * ${this.weekDayDefaultChar} ${this.yearDefaultChar}`.trim();
+    this.cron = `${this.isCronFlavorQuartz && !this.removeSeconds ? state.seconds : ''} 0/${state.minutes} * 1/1 * ${this.weekDayDefaultChar} ${this.yearDefaultChar}`.trim();
     this.cronForm.setValue(this.cron);
   }
 
@@ -476,6 +484,9 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
   private getDefaultState() {
     const [defaultHours, defaultMinutes, defaultSeconds] = this.options.defaultTime.split(':').map(Number);
 
+    if (this.isCronFlavorQuartz) {
+      this.localCron = '0 0 1/1 * * *'
+    }
     return {
       minutes: {
         minutes: 1,

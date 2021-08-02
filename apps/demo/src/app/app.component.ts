@@ -16,10 +16,10 @@ export class AppComponent implements OnInit {
 
     defaultTime: '00:00:00',
 
-    hideMinutesTab: true,
-    hideHourlyTab: true,
-    hideDailyTab: true,
-    hideWeeklyTab: true,
+    hideMinutesTab: false,
+    hideHourlyTab: false,
+    hideDailyTab: false,
+    hideWeeklyTab: false,
     hideMonthlyTab: false,
     hideYearlyTab: false,
     hideAdvancedTab: true,
@@ -28,9 +28,12 @@ export class AppComponent implements OnInit {
     hideNearestWeekdayCheck: true,
 
     use24HourTime: true,
-    hideSeconds: false,
+    hideSeconds: true,
 
-    cronFlavor: 'standard'
+    removeSeconds: false,
+    removeYears: false,
+
+    cronFlavor: 'quartz'
   };
 
   @ViewChild('cronEditorDemo')

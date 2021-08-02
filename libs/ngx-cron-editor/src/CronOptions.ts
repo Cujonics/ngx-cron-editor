@@ -24,8 +24,10 @@ export interface CronOptions {
   use24HourTime?: boolean;
   hideSeconds?: boolean;
 
+  removeSeconds?: boolean;
+  removeYears?: boolean;
+
   cronFlavor: string;
-  useGuru?: boolean;
 }
 
 interface CronTextOptions {
