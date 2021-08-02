@@ -143,11 +143,13 @@
                                 [hideSeconds]="options.hideSeconds || !isCronFlavorQuartz">
               </cron-time-picker>
 
-            <mat-checkbox
-              formControlName="nearestWeekday"
-              class="checkbox-margin">
-              {{ options?.texts?.nearestWeekdayText || 'during the nearest weekday'}}
-            </mat-checkbox>
+            <div [formGroup]="monthlyForm.controls.specificDay">
+              <mat-checkbox
+                formControlName="nearestWeekday"
+                class="checkbox-margin">
+                {{ options?.texts?.nearestWeekdayText || 'during the nearest weekday'}}
+              </mat-checkbox>
+            </div>
           </mat-radio-button>
 
           <!-- Specific Week day -->
@@ -244,11 +246,13 @@
                               [hideSeconds]="options.hideSeconds || !isCronFlavorQuartz">
             </cron-time-picker>
 
-            <mat-checkbox
-              formControlName="nearestWeekday"
-              class="checkbox-margin">
-              {{ options?.texts?.nearestWeekdayText || 'during the nearest weekday'}}
-            </mat-checkbox>
+            <div [formGroup]="yearlyForm.controls.specificMonthDay">
+              <mat-checkbox
+                formControlName="nearestWeekday"
+                class="checkbox-margin">
+                {{ options?.texts?.nearestWeekdayText || 'during the nearest weekday'}}
+              </mat-checkbox>
+            </div>
           </mat-radio-button>
 
           <!-- Specific Month Week -->
