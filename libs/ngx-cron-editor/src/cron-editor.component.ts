@@ -11,7 +11,6 @@ export const CRON_VALUE_ACCESSOR: any = {
   multi: true,
 };
 
-
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'cron-editor',
@@ -76,20 +75,10 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
     return this.options.cronFlavor === 'quartz' ? '?' : '*';
   }
 
-  get tabForm() {
-    switch (this.activeTab) {
-      case ('Minutes'): return this.minutesForm;
-      case ('Hours'):  return this.hourlyForm;
-      case ('Daily'): return this.dailyForm;
-    }
-  }
-
   /* Update the cron output to that of the selected tab.
    * The cron output value is updated whenever a form is updated. To make it change in response to tab selection, we simply reset
    * the value of the form that goes into focus. */
   public onTabFocus(idx: number) {
-
-    console.log(this.activeTab);
 
     switch (idx) {
       case 0:
