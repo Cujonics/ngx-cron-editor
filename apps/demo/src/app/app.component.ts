@@ -12,8 +12,6 @@ export class AppComponent implements OnInit {
   public cronExpression = '0 0 1/1 * *';
   public isCronDisabled = false;
   public cronOptions: CronOptions = {
-    texts: {},
-
     defaultTime: '00:00:00',
 
     hideMinutesTab: false,
