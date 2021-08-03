@@ -308,22 +308,22 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
   /* Unit Testing Functions End */
 
   private computeMinutesCron(state: any) {
-    this.cron = `${this.isCronFlavorQuartz && !this.removeSeconds ? state.seconds : ''} 0/${state.minutes} * 1/1 * ${this.weekDayDefaultChar} ${this.yearDefaultChar}`.trim();
+    this.cron = `${this.isCronFlavorQuartz && !this.removeSeconds ? state.seconds : ''} 0/${state.minutes} * 1/1 * ${this.weekDayDefaultChar} ${!this.removeYears ? this.yearDefaultChar : ''}`.trim();
     this.cronForm.setValue(this.cron);
   }
 
   private computeHourlyCron(state: any) {
-    this.cron = `${this.isCronFlavorQuartz ? state.seconds : ''} ${state.minutes} 0/${state.hours} 1/1 * ${this.weekDayDefaultChar} ${this.yearDefaultChar}`.trim();
+    this.cron = `${this.isCronFlavorQuartz && !this.removeSeconds ? state.seconds : ''} ${state.minutes} 0/${state.hours} 1/1 * ${this.weekDayDefaultChar} ${!this.removeYears ? this.yearDefaultChar : ''}`.trim();
     this.cronForm.setValue(this.cron);
   }
 
   private computeDailyCron(state: any) {
     switch (state.subTab) {
       case 'everyDays':
-        this.cron = `${this.isCronFlavorQuartz ? state.everyDays.seconds : ''} ${state.everyDays.minutes} ${this.hourToCron(state.everyDays.hours, state.everyDays.hourType)} 1/${state.everyDays.days} * ${this.weekDayDefaultChar} ${this.yearDefaultChar}`.trim();
+        this.cron = `${this.isCronFlavorQuartz && !this.removeSeconds ? state.everyDays.seconds : ''} ${state.everyDays.minutes} ${this.hourToCron(state.everyDays.hours, state.everyDays.hourType)} 1/${state.everyDays.days} * ${this.weekDayDefaultChar} ${!this.removeYears ? this.yearDefaultChar : ''}`.trim();
         break;
       case 'everyWeekDay':
-        this.cron = `${this.isCronFlavorQuartz ? state.everyWeekDay.seconds : ''} ${state.everyWeekDay.minutes} ${this.hourToCron(state.everyWeekDay.hours, state.everyWeekDay.hourType)} ${this.monthDayDefaultChar} * MON-FRI ${this.yearDefaultChar}`.trim();
+        this.cron = `${this.isCronFlavorQuartz && !this.removeSeconds ? state.everyWeekDay.seconds : ''} ${state.everyWeekDay.minutes} ${this.hourToCron(state.everyWeekDay.hours, state.everyWeekDay.hourType)} ${this.monthDayDefaultChar} * MON-FRI ${!this.removeYears ? this.yearDefaultChar : ''}`.trim();
         break;
       default:
         throw new Error('Invalid cron daily subtab selection');
@@ -332,23 +332,25 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
   }
 
   private computeWeeklyCron(state: any) {
+    console.log(this.selectOptions.days);
     const days = this.selectOptions.days
       .reduce((acc, day) => state[day] ? acc.concat([day]) : acc, [])
       .join(',');
-    this.cron = `${this.isCronFlavorQuartz ? state.seconds : ''} ${state.minutes} ${this.hourToCron(state.hours, state.hourType)} ${this.monthDayDefaultChar} * ${days} ${this.yearDefaultChar}`.trim();
+    console.log(days);
+    this.cron = `${this.isCronFlavorQuartz && !this.removeSeconds ? state.seconds : ''} ${state.minutes} ${this.hourToCron(state.hours, state.hourType)} ${this.monthDayDefaultChar} * ${days} ${!this.removeYears ? this.yearDefaultChar : ''}`.trim();
     this.cronForm.setValue(this.cron);
   }
 
   private computeMonthlyCron(state: any) {
     switch (state.subTab) {
       case 'specificDay':
-        this.cron = `${this.isCronFlavorQuartz ? state.specificDay.seconds : ''} ${state.specificDay.minutes} ${this.hourToCron(state.specificDay.hours, state.specificDay.hourType)} ${state.specificDay.day}${state.specificDay?.nearestWeekday ? 'W' : ''} 1/${state.specificDay.months} ${this.weekDayDefaultChar} ${this.yearDefaultChar}`.trim();
+        this.cron = `${this.isCronFlavorQuartz && !this.removeSeconds ? state.specificDay.seconds : ''} ${state.specificDay.minutes} ${this.hourToCron(state.specificDay.hours, state.specificDay.hourType)} ${state.specificDay.day}${state.specificDay?.nearestWeekday ? 'W' : ''} 1/${state.specificDay.months} ${this.weekDayDefaultChar} ${!this.removeYears ? this.yearDefaultChar : ''}`.trim();
         break;
       case 'specificWeekDay':
-        this.cron = `${this.isCronFlavorQuartz ? state.specificWeekDay.seconds : ''} ${state.specificWeekDay.minutes} ${this.hourToCron(state.specificWeekDay.hours, state.specificWeekDay.hourType)} ${this.monthDayDefaultChar} 1/${state.specificWeekDay.months} ${state.specificWeekDay.day}${state.specificWeekDay.monthWeek} ${this.yearDefaultChar}`.trim();
+        this.cron = `${this.isCronFlavorQuartz && !this.removeSeconds ? state.specificWeekDay.seconds : ''} ${state.specificWeekDay.minutes} ${this.hourToCron(state.specificWeekDay.hours, state.specificWeekDay.hourType)} ${this.monthDayDefaultChar} 1/${state.specificWeekDay.months} ${state.specificWeekDay.day}${state.specificWeekDay.monthWeek} ${!this.removeYears ? this.yearDefaultChar : ''}`.trim();
         break;
       default:
-        throw new Error('Invalid cron montly subtab selection');
+        throw new Error('Invalid cron monthly subtab selection');
     }
     this.cronForm.setValue(this.cron);
   }
@@ -356,10 +358,10 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
   private computeYearlyCron(state: any) {
     switch (state.subTab) {
       case 'specificMonthDay':
-        this.cron = `${this.isCronFlavorQuartz ? state.specificMonthDay.seconds : ''} ${state.specificMonthDay.minutes} ${this.hourToCron(state.specificMonthDay.hours, state.specificMonthDay.hourType)} ${state.specificMonthDay.day}${state.specificDay?.nearestWeekday ? 'W' : ''} ${state.specificMonthDay.month} ${this.weekDayDefaultChar} ${this.yearDefaultChar}`.trim();
+        this.cron = `${this.isCronFlavorQuartz && !this.removeSeconds ? state.specificMonthDay.seconds : ''} ${state.specificMonthDay.minutes} ${this.hourToCron(state.specificMonthDay.hours, state.specificMonthDay.hourType)} ${state.specificMonthDay.day}${state.specificDay?.nearestWeekday ? 'W' : ''} ${state.specificMonthDay.month} ${this.weekDayDefaultChar} ${!this.removeYears ? this.yearDefaultChar : ''}`.trim();
         break;
       case 'specificMonthWeek':
-        this.cron = `${this.isCronFlavorQuartz ? state.specificMonthWeek.seconds : ''} ${state.specificMonthWeek.minutes} ${this.hourToCron(state.specificMonthWeek.hours, state.specificMonthWeek.hourType)} ${this.monthDayDefaultChar} ${state.specificMonthWeek.month} ${state.specificMonthWeek.day}${state.specificMonthWeek.monthWeek} ${this.yearDefaultChar}`.trim();
+        this.cron = `${this.isCronFlavorQuartz && !this.removeSeconds ? state.specificMonthWeek.seconds : ''} ${state.specificMonthWeek.minutes} ${this.hourToCron(state.specificMonthWeek.hours, state.specificMonthWeek.hourType)} ${this.monthDayDefaultChar} ${state.specificMonthWeek.month} ${state.specificMonthWeek.day}${state.specificMonthWeek.monthWeek} ${!this.removeYears ? this.yearDefaultChar : ''}`.trim();
         break;
       default:
         throw new Error('Invalid cron yearly subtab selection');
