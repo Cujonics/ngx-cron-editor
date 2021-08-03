@@ -37,15 +37,17 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
   monthlyForm: FormGroup;
   yearlyForm: FormGroup;
   advancedForm: FormGroup;
-  private minutesRegex = /\d+ 0\/\d+ \* 1\/1 \* [?*] \*/g;
-  private hourlyRegex = /\d+ \d+ \d+ 1\/\d+ \* [?*] \*/g;
-  private dailyEveryDayRegex = /\d+ \d+ \d+ 1\/\d+ \* [?*] \*/g;
-  private dailyEveryWeekDayRegex = /\d+ \d+ \d+ [?*] \* MON-FRI \*/g;
-  private weeklyRegex = /\d+ \d+ \d+ [?*] \* (MON|TUE|WED|THU|FRI|SAT|SUN)(,(MON|TUE|WED|THU|FRI|SAT|SUN))* \*/g;
-  private monthlySpecificDayRegex = /\d+ \d+ \d+ (\d+|L|LW|1W) 1\/\d+ [?*] \*/g;
-  private monthlySpecificWeekDayRegex = /\d+ \d+ \d+ [?*] 1\/\d+ (MON|TUE|WED|THU|FRI|SAT|SUN)((#[1-5])|L) \*/g;
-  private yearlySpecificMonthDayRegex = /\d+ \d+ \d+ (\d+|L|LW|1W) \d+ [?*] \*/g;
-  private yearlySpecificMonthWeekRegex = /\d+ \d+ \d+ [?*] \d+ (MON|TUE|WED|THU|FRI|SAT|SUN)((#[1-5])|L) \*/g;
+  protected _tabs: string[] = ['minutes', 'hourly', 'daily', 'weekly', 'monthly', 'yearly', 'advanced']
+  protected _minutesRegex = /\d+ 0\/\d+ \* 1\/1 \* [?*] \*/g;
+  protected _hourlyRegex = /\d+ \d+ \d+ 1\/\d+ \* [?*] \*/g;
+  protected _dailyEveryDayRegex = /\d+ \d+ \d+ 1\/\d+ \* [?*] \*/g;
+  protected _dailyEveryWeekDayRegex = /\d+ \d+ \d+ [?*] \* MON-FRI \*/g;
+  protected _weeklyRegex = /\d+ \d+ \d+ [?*] \* (MON|TUE|WED|THU|FRI|SAT|SUN)(,(MON|TUE|WED|THU|FRI|SAT|SUN))* \*/g;
+  protected _monthlySpecificDayRegex = /\d+ \d+ \d+ (\d+|L|LW|1W) 1\/\d+ [?*] \*/g;
+  protected _monthlySpecificWeekDayRegex = /\d+ \d+ \d+ [?*] 1\/\d+ (MON|TUE|WED|THU|FRI|SAT|SUN)((#[1-5])|L) \*/g;
+  protected _yearlySpecificMonthDayRegex = /\d+ \d+ \d+ (\d+|L|LW|1W) \d+ [?*] \*/g;
+  protected _yearlySpecificMonthWeekRegex = /\d+ \d+ \d+ [?*] \d+ (MON|TUE|WED|THU|FRI|SAT|SUN)((#[1-5])|L) \*/g;
+
   private localCron = '0 0 1/1 * *';
   private isDirty: boolean;
 
@@ -429,20 +431,20 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
     const [seconds, minutes, hours, dayOfMonth, month, dayOfWeek] = cron.split(' ');
 
     switch (true) {
-      case this.minutesRegex.test(cron): {
+      case this._minutesRegex.test(cron): {
         this.activeTab = 'minutes';
         this.state.minutes.minutes = parseInt(minutes.substring(2), this.radix);
         this.state.minutes.seconds = parseInt(seconds, this.radix);
         break;
       }
-      case this.hourlyRegex.test(cron): {
+      case this._hourlyRegex.test(cron): {
         this.activeTab = 'hourly';
         this.state.hourly.hours = parseInt(hours.substring(2), this.radix);
         this.state.hourly.minutes = parseInt(minutes, this.radix);
         this.state.hourly.seconds = parseInt(seconds, this.radix);
         break;
       }
-      case this.dailyEveryDayRegex.test(cron): {
+      case this._dailyEveryDayRegex.test(cron): {
         this.activeTab = 'daily';
         this.state.daily.subTab = 'everyDays';
         this.state.daily.everyDays.days = parseInt(dayOfMonth.substring(2), this.radix);
@@ -453,7 +455,7 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
         this.state.daily.everyDays.seconds = parseInt(seconds, this.radix);
         break;
       }
-      case this.dailyEveryWeekDayRegex.test(cron): {
+      case this._dailyEveryWeekDayRegex.test(cron): {
         this.activeTab = 'daily';
         this.state.daily.subTab = 'everyWeekDay';
         const parsedHours = parseInt(hours, this.radix);
@@ -463,7 +465,7 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
         this.state.daily.everyWeekDay.seconds = parseInt(seconds, this.radix);
         break;
       }
-      case this.weeklyRegex.test(cron): {
+      case this._weeklyRegex.test(cron): {
         this.activeTab = 'weekly';
         this.selectOptions.days.forEach(weekDay => this.state.weekly[weekDay] = false);
         dayOfWeek.split(',').forEach(weekDay => this.state.weekly[weekDay] = true);
@@ -474,7 +476,7 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
         this.state.weekly.seconds = parseInt(seconds, this.radix);
         break;
       }
-      case this.monthlySpecificDayRegex.test(cron): {
+      case this._monthlySpecificDayRegex.test(cron): {
         this.activeTab = 'monthly';
         this.state.monthly.subTab = 'specificDay';
         this.state.monthly.specificDay.day = dayOfMonth;
@@ -487,7 +489,7 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
         this.state.monthly.specificDay.nearestWeekday = false
         break;
       }
-      case this.monthlySpecificWeekDayRegex.test(cron): {
+      case this._monthlySpecificWeekDayRegex.test(cron): {
         const day = dayOfWeek.substr(0, 3);
         const monthWeek = dayOfWeek.substr(3);
         this.activeTab = 'monthly';
@@ -502,7 +504,7 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
         this.state.monthly.specificWeekDay.seconds = parseInt(seconds, this.radix);
         break;
       }
-      case this.yearlySpecificMonthDayRegex.test(cron): {
+      case this._yearlySpecificMonthDayRegex.test(cron): {
         this.activeTab = 'yearly';
         this.state.yearly.subTab = 'specificMonthDay';
         this.state.yearly.specificMonthDay.month = parseInt(month, this.radix);
@@ -515,7 +517,7 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
         this.state.yearly.specificMonthDay.nearestWeekday = false
         break;
       }
-      case this.yearlySpecificMonthWeekRegex.test(cron): {
+      case this._yearlySpecificMonthWeekRegex.test(cron): {
         const day = dayOfWeek.substr(0, 3);
         const monthWeek = dayOfWeek.substr(3);
         this.activeTab = 'yearly';
