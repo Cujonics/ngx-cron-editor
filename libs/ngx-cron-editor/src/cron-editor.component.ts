@@ -333,7 +333,7 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
 
   private computeWeeklyCron(state: any) {
     const days = this.selectOptions.days
-      .reduce((acc, day) => state[day] ? acc.concat([day]) : acc, [])
+      .reduce( (acc, day) => state[day] ? acc.concat([day]) : acc, [])
       .join(',');
     this.cron = `${this.isCronFlavorQuartz && !this.removeSeconds ? state.seconds : ''} ${state.minutes} ${this.hourToCron(state.hours, state.hourType)} ${this.monthDayDefaultChar} * ${days} ${!this.removeYears ? this.yearDefaultChar : ''}`.trim();
     this.cronForm.setValue(this.cron);
@@ -356,7 +356,7 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
   private computeYearlyCron(state: any) {
     switch (state.subTab) {
       case 'specificMonthDay':
-        this.cron = `${this.isCronFlavorQuartz && !this.removeSeconds ? state.specificMonthDay.seconds : ''} ${state.specificMonthDay.minutes} ${this.hourToCron(state.specificMonthDay.hours, state.specificMonthDay.hourType)} ${state.specificMonthDay.day}${state.specificDay?.nearestWeekday ? 'W' : ''} ${state.specificMonthDay.month} ${this.weekDayDefaultChar} ${!this.removeYears ? this.yearDefaultChar : ''}`.trim();
+        this.cron = `${this.isCronFlavorQuartz && !this.removeSeconds ? state.specificMonthDay.seconds : ''} ${state.specificMonthDay.minutes} ${this.hourToCron(state.specificMonthDay.hours, state.specificMonthDay.hourType)} ${state.specificMonthDay.day}${state.specificMonthDay?.nearestWeekday ? 'W' : ''} ${state.specificMonthDay.month} ${this.weekDayDefaultChar} ${!this.removeYears ? this.yearDefaultChar : ''}`.trim();
         break;
       case 'specificMonthWeek':
         this.cron = `${this.isCronFlavorQuartz && !this.removeSeconds ? state.specificMonthWeek.seconds : ''} ${state.specificMonthWeek.minutes} ${this.hourToCron(state.specificMonthWeek.hours, state.specificMonthWeek.hourType)} ${this.monthDayDefaultChar} ${state.specificMonthWeek.month} ${state.specificMonthWeek.day}${state.specificMonthWeek.monthWeek} ${!this.removeYears ? this.yearDefaultChar : ''}`.trim();
@@ -380,7 +380,7 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
     return this.options.use24HourTime ? undefined : (hour >= 12 ? 'PM' : 'AM');
   }
 
-  private hourToCron(hour: number, hourType: string) {
+  hourToCron(hour: number, hourType: string) {
     if (this.options.use24HourTime) {
       return hour;
     } else {
