@@ -1,7 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import { CronOptions } from '../../../../libs/ngx-cron-editor/public_api';
-import { CronGenComponent } from '../../../../libs/ngx-cron-editor/public_api';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {CronGenComponent, CronOptions} from '../../../../libs/ngx-cron-editor/public_api';
+import {FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +19,9 @@ export class AppComponent implements OnInit {
     hideWeeklyTab: false,
     hideMonthlyTab: false,
     hideYearlyTab: false,
-    hideAdvancedTab: true,
+    hideAdvancedTab: false,
+
+    hideAdvancedTabOptions: false,
     hideSpecificWeekDayTab: false,
     hideSpecificMonthWeekTab: false,
     hideNearestWeekdayCheck: false,
@@ -39,7 +40,8 @@ export class AppComponent implements OnInit {
 
   cronForm: FormControl;
 
-  constructor() {}
+  constructor() {
+  }
 
   ngOnInit(): void {
     this.cronForm = new FormControl(this.cronExpression);
