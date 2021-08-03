@@ -309,6 +309,14 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
 
   /* Unit Testing Functions End */
 
+  hourToCron(hour: number, hourType: string) {
+    if (this.options.use24HourTime) {
+      return hour;
+    } else {
+      return hourType === 'AM' ? (hour === 12 ? 0 : hour) : (hour === 12 ? 12 : hour + 12);
+    }
+  }
+
   private computeMinutesCron(state: any) {
     this.cron = `${this.isCronFlavorQuartz && !this.removeSeconds ? state.seconds : ''} 0/${state.minutes} * 1/1 * ${this.weekDayDefaultChar} ${!this.removeYears ? this.yearDefaultChar : ''}`.trim();
     this.cronForm.setValue(this.cron);
