@@ -399,11 +399,10 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
   }
 
   private handleModelChange(cron: string) {
+    this.isDirty = !!this.isDirty;
     if (this.isDirty) {
       this.isDirty = false;
       return;
-    } else {
-      this.isDirty = false;
     }
 
     if (!this.cronIsValid(cron)) {
