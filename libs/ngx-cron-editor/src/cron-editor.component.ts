@@ -274,7 +274,9 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
     this.disabled = isDisabled;
   }
 
-  /* Unit Testing Functions Start  */
+  /* Unit Testing Functions Start
+  *  We utilize these public functions, because you cannot test private functions
+  */
   public _testComputeMinutesCron(state: any) {
     this.computeMinutesCron(state);
     return this.cron;
