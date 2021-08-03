@@ -22,7 +22,6 @@ export interface CronOptions {
   hideSpecificWeekDayTab?: boolean;
   hideSpecificMonthWeekTab?: boolean;
   hideNearestWeekdayCheck?: boolean; // Default: false
-  hideAdvancedTabOptions?: boolean; // Default: false
 
   use24HourTime?: boolean; // Default: true
   hideSeconds?: boolean; // Default: false

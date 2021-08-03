@@ -13,24 +13,26 @@ import { MatButtonModule } from '@angular/material/button';
 import { LayoutModule } from '@angular/cdk/layout';
 import {CommonModule} from '@angular/common';
 import {CronEditorModule} from '../../../../libs/ngx-cron-editor/src/cron-editor.module';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-    MatCardModule,
-    MatSelectModule,
-    MatSliderModule,
-    MatGridListModule,
-    MatMenuModule,
-    MatIconModule,
-    MatButtonModule,
-    LayoutModule,
-    CronEditorModule
-  ],
+    imports: [
+        CommonModule,
+        BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        MatCardModule,
+        MatSelectModule,
+        MatSliderModule,
+        MatGridListModule,
+        MatMenuModule,
+        MatIconModule,
+        MatButtonModule,
+        LayoutModule,
+        CronEditorModule,
+        MatCheckboxModule
+    ],
   declarations: [AppComponent],
   providers: [],
   bootstrap: [AppComponent]

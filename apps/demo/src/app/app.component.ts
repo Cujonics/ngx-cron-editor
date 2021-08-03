@@ -21,7 +21,6 @@ export class AppComponent implements OnInit {
     hideYearlyTab: false,
     hideAdvancedTab: false,
 
-    hideAdvancedTabOptions: false,
     hideSpecificWeekDayTab: false,
     hideSpecificMonthWeekTab: false,
     hideNearestWeekdayCheck: false,
@@ -34,6 +33,10 @@ export class AppComponent implements OnInit {
 
     cronFlavor: 'quartz'
   };
+
+  demoOptions = ['hideMinutesTab', 'hideHourlyTab', 'hideDailyTab', 'hideWeeklyTab', 'hideYearlyTab', 'hideAdvancedTab',
+    'hideSpecificWeekDayTab', 'hideSpecificMonthWeekTab', 'hideNearestWeekdayCheck', 'use24HourTime', 'hideSeconds', 'removeSeconds', 'removeYears'
+  ]
 
   @ViewChild('cronEditorDemo')
   cronEditorDemo: CronGenComponent;
@@ -49,5 +52,9 @@ export class AppComponent implements OnInit {
 
   cronFlavorChange(cronFlavor: string) {
     this.cronOptions.cronFlavor = cronFlavor;
+  }
+
+  optionsChanged($event, option, optVal) {
+    this.cronOptions[option] = $event;
   }
 }

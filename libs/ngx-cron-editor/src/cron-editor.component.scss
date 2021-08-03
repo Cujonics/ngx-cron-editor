@@ -18,6 +18,7 @@
   overflow: hidden;
   height: 200px;
   border-radius: 8px;
+  margin-right: 10px;
   h2 {
     margin-bottom: 5px;
   }
@@ -106,7 +107,7 @@
       max-width: 125px;
     }
   }
-  
+
   .daily-content .mat-form-field, .weekly-content .mat-form-field, .yearly-content .mat-form-field {
     max-width: 100px;
   }

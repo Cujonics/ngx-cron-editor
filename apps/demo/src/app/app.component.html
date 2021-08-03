@@ -1,42 +1,75 @@
-<section class="mat-typography demo-container">
+<mat-card class="mat-typography demo-container">
+  <mat-card-header class="demo-card-header">
+    <mat-card-title>Angular Cron Expression Editor</mat-card-title>
+  </mat-card-header>
 
-  <h1>Angular Cron Expression Editor</h1>
+  <mat-card-content class="demo-card-content row">
+    <div class="col-md-2">
+      <h2>Options</h2>
+      <div>
+        <mat-form-field>
+          <mat-label>Flavor</mat-label>
+          <mat-select (valueChange)="cronFlavorChange($event)" [(ngModel)]="cronOptions.cronFlavor">
+            <mat-option [value]="'quartz'">
+              Quartz
+            </mat-option>
 
-    <mat-card class="demo-card">
-      <mat-card-header class="demo-card-header">
+            <mat-option [value]="'standard'">
+              Standard
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-        <mat-card-title>
-          Select your cron flavor
-        </mat-card-title>
-        <div>
-          <mat-form-field>
-            <mat-label>Flavor</mat-label>
-            <mat-select (valueChange)="cronFlavorChange($event)" [(ngModel)]="cronOptions.cronFlavor">
-              <mat-option [value]="'quartz'">
-                Quartz
-              </mat-option>
-
-              <mat-option [value]="'standard'">
-                Standard
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-      </mat-card-header>
-
-      <mat-card-content class="demo-card-content">
+        <mat-checkbox *ngFor="let opt of demoOptions" [ngModel]="cronOptions[opt]" class="checkbox-margin"
+                      (ngModelChange)="optionsChanged($event, opt, cronOptions[opt])">{{opt}}</mat-checkbox>
+      </div>
+    </div>
+    <div class="col-md-10">
+      <div>
         <form>
-        <cron-editor  #cronEditorDemo [formControl]="cronForm"  [options]="cronOptions"></cron-editor>
+          <cron-editor  #cronEditorDemo [formControl]="cronForm"  [options]="cronOptions"></cron-editor>
         </form>
-      </mat-card-content>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-footer class="demo-card-footer">
+    <div>
+      <h3>
+        <b>Expression: {{cronForm.value}}</b>
+      </h3>
+    </div>
+  </mat-card-footer>
+</mat-card>
 
-      <mat-card-footer class="demo-card-footer">
-        <div>
-          <h3>
-            <b>Expression: {{cronForm.value}}</b>
-          </h3>
-        </div>
-      </mat-card-footer>
 
-    </mat-card>
-</section>
+<!--<section class="mat-typography demo-container container">-->
+<!--  <h1>Angular Cron Expression Editor</h1>-->
+<!--  <div class="card-container">-->
+<!--    <mat-card class="demo-card col-md-2">-->
+<!--      <mat-card-header class="demo-card-header">-->
+<!--        <mat-card-title>ngx-cron-editor options</mat-card-title>-->
+<!--      </mat-card-header>-->
+
+<!--      <mat-card-content class="demo-card-content">-->
+
+<!--      </mat-card-content>-->
+<!--    </mat-card>-->
+
+<!--    <mat-card class="demo-card col-md-10">-->
+<!--      <mat-card-header class="demo-card-header">-->
+<!--        <mat-card-title>-->
+<!--          ngx-cron-editor demo-->
+<!--        </mat-card-title>-->
+<!--      </mat-card-header>-->
+
+<!--      <mat-card-content class="demo-card-content">-->
+<!--        -->
+<!--      </mat-card-content>-->
+
+<!--      <mat-card-footer class="demo-card-footer">-->
+<!--        -->
+<!--      </mat-card-footer>-->
+
+<!--    </mat-card>-->
+<!--  </div>-->
+<!--</section>-->
