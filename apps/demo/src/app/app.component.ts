@@ -45,7 +45,7 @@ export class AppComponent implements OnInit {
     this.cronForm = new FormControl(this.cronExpression);
   }
 
-  cronFlavorChange() {
-    this.cronEditorDemo.options = this.cronOptions;
+  cronFlavorChange(cronFlavor: string) {
+    this.cronOptions.cronFlavor = cronFlavor;
   }
 }

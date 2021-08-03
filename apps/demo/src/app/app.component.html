@@ -11,7 +11,7 @@
         <div>
           <mat-form-field>
             <mat-label>Flavor</mat-label>
-            <mat-select (change)="cronFlavorChange()" [(ngModel)]="cronOptions.cronFlavor">
+            <mat-select (valueChange)="cronFlavorChange($event)" [(ngModel)]="cronOptions.cronFlavor">
               <mat-option [value]="'quartz'">
                 Quartz
               </mat-option>
