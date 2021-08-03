@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
     hideAdvancedTab: true,
     hideSpecificWeekDayTab: false,
     hideSpecificMonthWeekTab: false,
-    hideNearestWeekdayCheck: true,
+    hideNearestWeekdayCheck: false,
 
     use24HourTime: true,
     hideSeconds: true,
