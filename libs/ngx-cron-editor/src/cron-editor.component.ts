@@ -408,15 +408,22 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
 
     const [seconds, minutes, hours, dayOfMonth, month, dayOfWeek] = cron.split(' ');
 
+    // Generic values used across multiple tabs.
+    const parsedSeconds = parseInt(seconds, this.radix);
+    const parsedMinutes = parseInt(minutes, this.radix)
     const parsedHours = parseInt(hours, this.radix);
-    const monthWeek = dayOfWeek.substr(3);
+    const parsedAmPmHours = this.getAmPmHour(parsedHours);
+    const parsedHourType = this.getHourType(parsedHours);
     const day = dayOfWeek.substr(0, 3);
+    const monthWeek = dayOfWeek.substr(3);
+    const parsedMonth = parseInt(month, this.radix)
+    const months = parseInt(month.substring(2), this.radix);
 
     switch (true) {
       case this._minutesRegex.test(cron): {
         this.activeTab = 'minutes';
         this.state.minutes = {
-          seconds: parseInt(seconds, this.radix),
+          seconds: parsedSeconds,
           minutes: parseInt(minutes.substring(2), this.radix),
         }
         break;
@@ -424,8 +431,8 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
       case this._hourlyRegex.test(cron): {
         this.activeTab = 'hourly';
         this.state.hourly = {
-          seconds: parseInt(seconds, this.radix),
-          minutes: parseInt(minutes, this.radix),
+          seconds: parsedSeconds,
+          minutes: parsedMinutes,
           hours: parseInt(hours.substring(2), this.radix),
         }
         break;
@@ -435,10 +442,10 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
         this.state.daily = {
           subTab: 'everyDay',
           everyDay: {
-            seconds: parseInt(seconds, this.radix),
-            minutes: parseInt(minutes, this.radix),
-            hours: this.getAmPmHour(parsedHours),
-            hourType: this.getHourType(parsedHours),
+            seconds: parsedSeconds,
+            minutes: parsedMinutes,
+            hours: parsedAmPmHours,
+            hourType: parsedHourType,
             days: parseInt(dayOfMonth.substring(2), this.radix),
           }
         }
@@ -449,10 +456,10 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
         this.state.daily = {
           subTab: 'everyWeekDay',
           everyWeekDay: {
-            seconds: parseInt(seconds, this.radix),
-            minutes: parseInt(minutes, this.radix),
-            hours: this.getAmPmHour(parsedHours),
-            hourType: this.getHourType(parsedHours)
+            seconds: parsedSeconds,
+            minutes: parsedMinutes,
+            hours: parsedAmPmHours,
+            hourType: parsedHourType
           },
         }
         break;
@@ -460,10 +467,10 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
       case this._weeklyRegex.test(cron): {
         this.activeTab = 'weekly';
         this.state.weekly = {
-          seconds: parseInt(seconds, this.radix),
-          minutes: parseInt(minutes, this.radix),
-          hours: this.getAmPmHour(parsedHours),
-          hourType: this.getHourType(parsedHours),
+          seconds: parsedSeconds,
+          minutes: parsedMinutes,
+          hours: parsedAmPmHours,
+          hourType: parsedHourType,
         }
         this.selectOptions.days.forEach(weekDay => this.state.weekly[weekDay] = false);
         dayOfWeek.split(',').forEach(weekDay => this.state.weekly[weekDay] = true);
@@ -474,12 +481,12 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
         this.state.monthly = {
           subTab: 'specificDay',
           specificDay: {
-            seconds: parseInt(seconds, this.radix),
-            minutes: parseInt(minutes, this.radix),
-            hours: this.getAmPmHour(parsedHours),
-            hourType: this.getHourType(parsedHours),
+            seconds: parsedSeconds,
+            minutes: parsedMinutes,
+            hours: parsedAmPmHours,
+            hourType: parsedHourType,
             day: dayOfMonth,
-            months: parseInt(month.substring(2), this.radix),
+            months: months,
             nearestWeekday: false,
           },
         }
@@ -490,13 +497,13 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
         this.state.monthly = {
           subTab: 'specificWeekDay',
           specificWeekDay: {
-            seconds: parseInt(seconds, this.radix),
-            minutes: parseInt(minutes, this.radix),
-            hours: this.getAmPmHour(parsedHours),
-            hourType: this.getHourType(parsedHours),
+            seconds: parsedSeconds,
+            minutes: parsedMinutes,
+            hours: parsedAmPmHours,
+            hourType: parsedHourType,
             day: day,
             monthWeek: monthWeek,
-            months: parseInt(month.substring(2), this.radix)
+            months: months
           }
         }
         break;
@@ -506,12 +513,12 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
         this.state.yearly = {
           subTab: 'specificMonthDay',
           specificMonthDay: {
-            seconds: parseInt(seconds, this.radix),
-            minutes: parseInt(minutes, this.radix),
-            hours: this.getAmPmHour(parsedHours),
-            hourType: this.getHourType(parsedHours),
+            seconds: parsedSeconds,
+            minutes: parsedMinutes,
+            hours: parsedAmPmHours,
+            hourType: parsedHourType,
             day: dayOfMonth,
-            month: parseInt(month, this.radix),
+            month: parsedMonth,
             nearestWeekday: false,
           }
         }
@@ -522,12 +529,12 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
         this.state.yearly = {
           subTab: 'specificMonthWeek',
           specificMonthWeek: {
-            seconds: parseInt(seconds, this.radix),
-            minutes: parseInt(minutes, this.radix),
-            hours: this.getAmPmHour(parsedHours),
-            hourType: this.getHourType(parsedHours),
+            seconds: parsedSeconds,
+            minutes: parsedMinutes,
+            hours: parsedAmPmHours,
+            hourType: parsedHourType,
             day: day,
-            month: parseInt(month, this.radix),
+            month: parsedMonth,
             monthWeek: monthWeek,
           }
         }
