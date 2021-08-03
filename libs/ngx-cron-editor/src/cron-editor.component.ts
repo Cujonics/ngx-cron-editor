@@ -103,7 +103,7 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
       const tabForm = this._tabs[idx] + 'Form';
       this[tabForm].setValue(this[tabForm].value);
     } catch (err) {
-      throw(new Error(`Invalid tab selected! Tab: ${this._tabs[idx]}, Tab Index: ${idx}`));
+      throw(new Error(`Invalid tab selected! Tab Index: ${idx}`));
     }
   }
 
