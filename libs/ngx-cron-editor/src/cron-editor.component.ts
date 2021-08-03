@@ -99,31 +99,11 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
    * The cron output value is updated whenever a form is updated. To make it change in response to tab selection, we simply reset
    * the value of the form that goes into focus. */
   public onTabFocus(idx: number) {
-
-    switch (idx) {
-      case 0:
-        this.minutesForm.setValue(this.minutesForm.value);
-        break;
-      case 1:
-        this.hourlyForm.setValue(this.hourlyForm.value);
-        break;
-      case 2:
-        this.dailyForm.setValue(this.dailyForm.value);
-        break;
-      case 3:
-        this.weeklyForm.setValue(this.weeklyForm.value);
-        break;
-      case 4:
-        this.monthlyForm.setValue(this.monthlyForm.value);
-        break;
-      case 5:
-        this.yearlyForm.setValue(this.yearlyForm.value);
-        break;
-      case 6:
-        this.advancedForm.setValue(this.advancedForm.value);
-        break;
-      default:
-        throw(new Error('Invalid tab selected'));
+    try {
+      const tabForm = this._tabs[idx] + 'Form';
+      this[tabForm].setValue(this[tabForm].value);
+    } catch (err) {
+      throw(new Error(`Invalid tab selected! Tab: ${this._tabs[idx]}, Tab Index: ${idx}`));
     }
   }
 
