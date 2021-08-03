@@ -332,11 +332,9 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
   }
 
   private computeWeeklyCron(state: any) {
-    console.log(this.selectOptions.days);
     const days = this.selectOptions.days
       .reduce((acc, day) => state[day] ? acc.concat([day]) : acc, [])
       .join(',');
-    console.log(days);
     this.cron = `${this.isCronFlavorQuartz && !this.removeSeconds ? state.seconds : ''} ${state.minutes} ${this.hourToCron(state.hours, state.hourType)} ${this.monthDayDefaultChar} * ${days} ${!this.removeYears ? this.yearDefaultChar : ''}`.trim();
     this.cronForm.setValue(this.cron);
   }
