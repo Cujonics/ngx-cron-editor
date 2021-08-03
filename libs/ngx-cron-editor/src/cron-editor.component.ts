@@ -29,8 +29,6 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
 
   public weekdays: string[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
-  // the name is an Angular convention, @Input variable name + "Change" suffix
-  // @Output() cronChange = new EventEmitter();
   private minutesRegex = /\d+ 0\/\d+ \* 1\/1 \* [?*] \*/g;
   private hourlyRegex = /\d+ \d+ \d+ 1\/\d+ \* [?*] \*/g;
   private dailyEveryDayRegex = /\d+ \d+ \d+ 1\/\d+ \* [?*] \*/g;
