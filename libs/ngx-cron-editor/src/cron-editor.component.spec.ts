@@ -1,29 +1,59 @@
 import {FormBuilder} from '@angular/forms';
 import {CronGenComponent} from './cron-editor.component';
 import {autoSpy} from '../../../auto-spy';
+import * as assert from 'assert';
 
-describe('Default Options', () => {
-  const defaultTests = [
+const {build} = setup().default();
+const c = build();
+
+describe('ComputeMinutesCron(): ', () => {
+  const minutesCronTests = [
     {
-      input: ''
-    }
+      state: {
+        minutes: 0,
+        seconds: 0,
+      },
+      expectedOutput: '0 0/0 * 1/1 * ? *',
+      description: 'Quartz minutes cron with default options',
+      options: {
+        defaultTime: '00:00:00',
+        cronFlavor: 'quartz'
+      },
+    },
+    {
+      state: {
+        minutes: 0,
+        seconds: 0,
+      },
+      expectedOutput: '0/0 * 1/1 * ? *',
+      description: 'Quartz minutes cron with removeSeconds option',
+      options: {
+        defaultTime: '00:00:00',
+        cronFlavor: 'quartz',
+        removeSeconds: true,
+      },
+    },
   ]
 
-  it('when ngOnInit is called it should', () => {
-    // arrange
-    const {build} = setup().default();
-    const c = build();
+  // _testComputeMinutesCron, _testComputeHourlyCron, _testComputeDailyCron
+  // _testComputeWeeklyCron, _testComputeMonthlyCron, _testComputeYearlyCron
 
-    c.options = {
-      defaultTime: '00:00:00',
-      cronFlavor: 'quartz'
-    }
+  minutesCronTests.forEach((sample) => {
+    it(sample.description, async () => {
+      c.options = sample.options;
+      c.ngOnInit();
+      const computedValue = c._testComputeMinutesCron(sample.state)
+      assert.strictEqual(computedValue, sample.expectedOutput);
+    });
+  });
 
-    // act
-    c.ngOnInit();
-    // assert
-    // expect(c).toEqual
-  })
+  // it('when ngOnInit is called it should', () => {
+  //   // arrange
+  //   // act
+  //   c.ngOnInit();
+  //   // assert
+  //   // expect(c).toEqual
+  // })
 });
 
 function setup() {
