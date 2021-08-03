@@ -390,11 +390,13 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
     return this.options.use24HourTime ? undefined : (hour >= 12 ? 'PM' : 'AM');
   }
 
-  hourToCron(hour: number, hourType: string) {
-    if (this.options.use24HourTime) {
-      return hour;
+  private errorChecker(): void {
+    if (this.isCronFlavorQuartz) {
+      throw new Error('Invalid quartz cron expression, there must be 6 or 7 segments');
+    } else if (this.isCronFlavorStandard) {
+      throw new Error('Invalid standard cron expression, there must be 5 segments');
     } else {
-      return hourType === 'AM' ? (hour === 12 ? 0 : hour) : (hour === 12 ? 12 : hour + 12);
+      throw new Error('Invalid cronFlavor selected, please choose quartz or standard');
     }
   }
 
@@ -406,13 +408,7 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
     }
 
     if (!this.cronIsValid(cron)) {
-      if (this.isCronFlavorQuartz) {
-        throw new Error('Invalid cron expression, there must be 6 or 7 segments');
-      }
-
-      if (this.isCronFlavorStandard) {
-        throw new Error('Invalid cron expression, there must be 5 segments');
-      }
+      this.errorChecker();
     }
 
     const origCron: string = cron;
