@@ -561,8 +561,10 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
 
   private getDefaultState() {
     const [defaultHours, defaultMinutes, defaultSeconds] = this.options.defaultTime.split(':').map(Number);
+    const defaultAmPmHour = this.getAmPmHour(defaultHours);
+    const defaultHourType = this.getHourType(defaultHours);
 
-    if (this.isCronFlavorQuartz) {
+    if (this.isCronFlavorQuartz && !this.isDirty) {
       this.localCron = '0 0 1/1 * * *'
     }
     return {
@@ -579,16 +581,16 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
         subTab: 'everyDay',
         everyDay: {
           days: 1,
-          hours: this.getAmPmHour(defaultHours),
+          hours: defaultAmPmHour,
           minutes: defaultMinutes,
           seconds: defaultSeconds,
-          hourType: this.getHourType(defaultHours)
+          hourType: defaultHourType
         },
         everyWeekDay: {
-          hours: this.getAmPmHour(defaultHours),
+          hours: defaultAmPmHour,
           minutes: defaultMinutes,
           seconds: defaultSeconds,
-          hourType: this.getHourType(defaultHours)
+          hourType: defaultHourType
         }
       },
       weekly: {
@@ -599,30 +601,30 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
         FRI: false,
         SAT: false,
         SUN: false,
-        hours: this.getAmPmHour(defaultHours),
+        hours: defaultAmPmHour,
         minutes: defaultMinutes,
         seconds: defaultSeconds,
-        hourType: this.getHourType(defaultHours)
+        hourType: defaultHourType
       },
       monthly: {
         subTab: 'specificDay',
         specificDay: {
           day: '1',
           months: 1,
-          hours: this.getAmPmHour(defaultHours),
+          hours: defaultAmPmHour,
           minutes: defaultMinutes,
           seconds: defaultSeconds,
-          hourType: this.getHourType(defaultHours),
+          hourType: defaultHourType,
           nearestWeekday: false
         },
         specificWeekDay: {
           monthWeek: '#1',
           day: 'MON',
           months: 1,
-          hours: this.getAmPmHour(defaultHours),
+          hours: defaultAmPmHour,
           minutes: defaultMinutes,
           seconds: defaultSeconds,
-          hourType: this.getHourType(defaultHours)
+          hourType: defaultHourType
         }
       },
       yearly: {
@@ -630,20 +632,20 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
         specificMonthDay: {
           month: 1,
           day: '1',
-          hours: this.getAmPmHour(defaultHours),
+          hours: defaultAmPmHour,
           minutes: defaultMinutes,
           seconds: defaultSeconds,
-          hourType: this.getHourType(defaultHours),
+          hourType: defaultHourType,
           nearestWeekday: false
         },
         specificMonthWeek: {
           monthWeek: '#1',
           day: 'MON',
           month: 1,
-          hours: this.getAmPmHour(defaultHours),
+          hours: defaultAmPmHour,
           minutes: defaultMinutes,
           seconds: defaultSeconds,
-          hourType: this.getHourType(defaultHours)
+          hourType: defaultHourType
         }
       },
       advanced: {
