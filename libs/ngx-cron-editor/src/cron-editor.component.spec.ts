@@ -145,8 +145,8 @@ describe('Quartz ComputeDailyCron() specificDay: ', () => {
   const tests = [
     {
       state: {
-        subTab: 'everyDays',
-        everyDays: {
+        subTab: 'everyDay',
+        everyDay: {
           seconds: 0,
           minutes: 0,
           hours: 1,
@@ -163,8 +163,8 @@ describe('Quartz ComputeDailyCron() specificDay: ', () => {
     },
     {
       state: {
-        subTab: 'everyDays',
-        everyDays: {
+        subTab: 'everyDay',
+        everyDay: {
           seconds: 0,
           minutes: 0,
           hours: 1,
@@ -182,8 +182,8 @@ describe('Quartz ComputeDailyCron() specificDay: ', () => {
     },
     {
       state: {
-        subTab: 'everyDays',
-        everyDays: {
+        subTab: 'everyDay',
+        everyDay: {
           seconds: 0,
           minutes: 0,
           hours: 1,
@@ -201,8 +201,8 @@ describe('Quartz ComputeDailyCron() specificDay: ', () => {
     },
     {
       state: {
-        subTab: 'everyDays',
-        everyDays: {
+        subTab: 'everyDay',
+        everyDay: {
           seconds: 0,
           minutes: 0,
           hours: 1,

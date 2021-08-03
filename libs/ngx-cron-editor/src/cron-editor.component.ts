@@ -117,73 +117,71 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
     this.cronForm = new FormControl('0 0 1/1 * *');
 
     this.minutesForm = this.fb.group({
-      hours: [0],
+      seconds: [0],
       minutes: [1],
-      seconds: [0]
     });
-
     this.minutesForm.valueChanges.subscribe(value => this.computeMinutesCron(value));
 
     this.hourlyForm = this.fb.group({
-      hours: [1],
+      seconds: [0],
       minutes: [0],
-      seconds: [0]
+      hours: [1]
     });
     this.hourlyForm.valueChanges.subscribe(value => this.computeHourlyCron(value));
 
     this.dailyForm = this.fb.group({
-      subTab: ['everyDays'],
-      everyDays: this.fb.group({
-        days: [1],
-        hours: [this.getAmPmHour(1)],
-        minutes: [0],
+      subTab: ['everyDay'],
+      everyDay: this.fb.group({
         seconds: [0],
-        hourType: [this.getHourType(0)]
+        minutes: [0],
+        hours: [this.getAmPmHour(1)],
+        hourType: [this.getHourType(0)],
+        days: [1]
       }),
       everyWeekDay: this.fb.group({
-        days: [0],
-        hours: [this.getAmPmHour(1)],
-        minutes: [0],
         seconds: [0],
-        hourType: [this.getHourType(0)]
+        minutes: [0],
+        hours: [this.getAmPmHour(1)],
+        hourType: [this.getHourType(0)],
+        days: [0]
       })
     });
     this.dailyForm.valueChanges.subscribe(value => this.computeDailyCron(value));
 
     this.weeklyForm = this.fb.group({
+      seconds: [defaultSeconds],
+      minutes: [defaultMinutes],
+      hours: [this.getAmPmHour(defaultHours)],
+      hourType: [this.getHourType(defaultHours)],
       MON: [true],
       TUE: [false],
       WED: [false],
       THU: [false],
       FRI: [false],
       SAT: [false],
-      SUN: [false],
-      hours: [this.getAmPmHour(defaultHours)],
-      minutes: [defaultMinutes],
-      seconds: [defaultSeconds],
-      hourType: [this.getHourType(defaultHours)]
+      SUN: [false]
     });
     this.weeklyForm.valueChanges.subscribe(next => this.computeWeeklyCron(next));
 
     this.monthlyForm = this.fb.group({
       subTab: ['specificDay'],
       specificDay: this.fb.group({
+        seconds: [defaultSeconds],
+        minutes: [defaultMinutes],
+        hours: [this.getAmPmHour(defaultHours)],
+        hourType: [this.getHourType(defaultHours)],
         day: ['1'],
         months: [1],
-        hours: [this.getAmPmHour(defaultHours)],
-        minutes: [defaultMinutes],
-        seconds: [defaultSeconds],
-        hourType: [this.getHourType(defaultHours)],
         nearestWeekday: [false]
       }),
       specificWeekDay: this.fb.group({
-        monthWeek: ['#1'],
+        seconds: [defaultSeconds],
+        minutes: [defaultMinutes],
+        hours: [this.getAmPmHour(defaultHours)],
+        hourType: [this.getHourType(defaultHours)],
         day: ['MON'],
         months: [1],
-        hours: [this.getAmPmHour(defaultHours)],
-        minutes: [defaultMinutes],
-        seconds: [defaultSeconds],
-        hourType: [this.getHourType(defaultHours)]
+        monthWeek: ['#1']
       })
     });
     this.monthlyForm.valueChanges.subscribe(next => this.computeMonthlyCron(next));
@@ -191,22 +189,22 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
     this.yearlyForm = this.fb.group({
       subTab: ['specificMonthDay'],
       specificMonthDay: this.fb.group({
-        month: [1],
-        day: ['1'],
-        hours: [this.getAmPmHour(defaultHours)],
-        minutes: [defaultMinutes],
         seconds: [defaultSeconds],
+        minutes: [defaultMinutes],
+        hours: [this.getAmPmHour(defaultHours)],
         hourType: [this.getHourType(defaultHours)],
+        day: ['1'],
+        month: [1],
         nearestWeekday: [false]
       }),
       specificMonthWeek: this.fb.group({
-        monthWeek: ['#1'],
+        seconds: [defaultSeconds],
+        minutes: [defaultMinutes],
+        hours: [this.getAmPmHour(defaultHours)],
+        hourType: [this.getHourType(defaultHours)],
         day: ['MON'],
         month: [1],
-        hours: [this.getAmPmHour(defaultHours)],
-        minutes: [defaultMinutes],
-        seconds: [defaultSeconds],
-        hourType: [this.getHourType(defaultHours)]
+        monthWeek: ['#1']
       })
     });
     this.yearlyForm.valueChanges.subscribe(next => this.computeYearlyCron(next));
@@ -321,8 +319,8 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
 
   private computeDailyCron(state: any) {
     switch (state.subTab) {
-      case 'everyDays':
-        this.cron = `${this.isCronFlavorQuartz && !this.removeSeconds ? state.everyDays.seconds : ''} ${state.everyDays.minutes} ${this.hourToCron(state.everyDays.hours, state.everyDays.hourType)} 1/${state.everyDays.days} * ${this.weekDayDefaultChar} ${!this.removeYears ? this.yearDefaultChar : ''}`.trim();
+      case 'everyDay':
+        this.cron = `${this.isCronFlavorQuartz && !this.removeSeconds ? state.everyDay.seconds : ''} ${state.everyDay.minutes} ${this.hourToCron(state.everyDay.hours, state.everyDay.hourType)} 1/${state.everyDay.days} * ${this.weekDayDefaultChar} ${!this.removeYears ? this.yearDefaultChar : ''}`.trim();
         break;
       case 'everyWeekDay':
         this.cron = `${this.isCronFlavorQuartz && !this.removeSeconds ? state.everyWeekDay.seconds : ''} ${state.everyWeekDay.minutes} ${this.hourToCron(state.everyWeekDay.hours, state.everyWeekDay.hourType)} ${this.monthDayDefaultChar} * MON-FRI ${!this.removeYears ? this.yearDefaultChar : ''}`.trim();
@@ -410,106 +408,129 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
 
     const [seconds, minutes, hours, dayOfMonth, month, dayOfWeek] = cron.split(' ');
 
+    const parsedHours = parseInt(hours, this.radix);
+    const monthWeek = dayOfWeek.substr(3);
+    const day = dayOfWeek.substr(0, 3);
+
     switch (true) {
       case this._minutesRegex.test(cron): {
         this.activeTab = 'minutes';
-        this.state.minutes.minutes = parseInt(minutes.substring(2), this.radix);
-        this.state.minutes.seconds = parseInt(seconds, this.radix);
+        this.state.minutes = {
+          seconds: parseInt(seconds, this.radix),
+          minutes: parseInt(minutes.substring(2), this.radix),
+        }
         break;
       }
       case this._hourlyRegex.test(cron): {
         this.activeTab = 'hourly';
-        this.state.hourly.hours = parseInt(hours.substring(2), this.radix);
-        this.state.hourly.minutes = parseInt(minutes, this.radix);
-        this.state.hourly.seconds = parseInt(seconds, this.radix);
+        this.state.hourly = {
+          seconds: parseInt(seconds, this.radix),
+          minutes: parseInt(minutes, this.radix),
+          hours: parseInt(hours.substring(2), this.radix),
+        }
         break;
       }
       case this._dailyEveryDayRegex.test(cron): {
         this.activeTab = 'daily';
-        this.state.daily.subTab = 'everyDays';
-        this.state.daily.everyDays.days = parseInt(dayOfMonth.substring(2), this.radix);
-        const parsedHours = parseInt(hours, this.radix);
-        this.state.daily.everyDays.hours = this.getAmPmHour(parsedHours);
-        this.state.daily.everyDays.hourType = this.getHourType(parsedHours);
-        this.state.daily.everyDays.minutes = parseInt(minutes, this.radix);
-        this.state.daily.everyDays.seconds = parseInt(seconds, this.radix);
+        this.state.daily = {
+          subTab: 'everyDay',
+          everyDay: {
+            seconds: parseInt(seconds, this.radix),
+            minutes: parseInt(minutes, this.radix),
+            hours: this.getAmPmHour(parsedHours),
+            hourType: this.getHourType(parsedHours),
+            days: parseInt(dayOfMonth.substring(2), this.radix),
+          }
+        }
         break;
       }
       case this._dailyEveryWeekDayRegex.test(cron): {
         this.activeTab = 'daily';
-        this.state.daily.subTab = 'everyWeekDay';
-        const parsedHours = parseInt(hours, this.radix);
-        this.state.daily.everyWeekDay.hours = this.getAmPmHour(parsedHours);
-        this.state.daily.everyWeekDay.hourType = this.getHourType(parsedHours);
-        this.state.daily.everyWeekDay.minutes = parseInt(minutes, this.radix);
-        this.state.daily.everyWeekDay.seconds = parseInt(seconds, this.radix);
+        this.state.daily = {
+          subTab: 'everyWeekDay',
+          everyWeekDay: {
+            seconds: parseInt(seconds, this.radix),
+            minutes: parseInt(minutes, this.radix),
+            hours: this.getAmPmHour(parsedHours),
+            hourType: this.getHourType(parsedHours)
+          },
+        }
         break;
       }
       case this._weeklyRegex.test(cron): {
         this.activeTab = 'weekly';
+        this.state.weekly = {
+          seconds: parseInt(seconds, this.radix),
+          minutes: parseInt(minutes, this.radix),
+          hours: this.getAmPmHour(parsedHours),
+          hourType: this.getHourType(parsedHours),
+        }
         this.selectOptions.days.forEach(weekDay => this.state.weekly[weekDay] = false);
         dayOfWeek.split(',').forEach(weekDay => this.state.weekly[weekDay] = true);
-        const parsedHours = parseInt(hours, this.radix);
-        this.state.weekly.hours = this.getAmPmHour(parsedHours);
-        this.state.weekly.hourType = this.getHourType(parsedHours);
-        this.state.weekly.minutes = parseInt(minutes, this.radix);
-        this.state.weekly.seconds = parseInt(seconds, this.radix);
         break;
       }
       case this._monthlySpecificDayRegex.test(cron): {
         this.activeTab = 'monthly';
-        this.state.monthly.subTab = 'specificDay';
-        this.state.monthly.specificDay.day = dayOfMonth;
-        this.state.monthly.specificDay.months = parseInt(month.substring(2), this.radix);
-        const parsedHours = parseInt(hours, this.radix);
-        this.state.monthly.specificDay.hours = this.getAmPmHour(parsedHours);
-        this.state.monthly.specificDay.hourType = this.getHourType(parsedHours);
-        this.state.monthly.specificDay.minutes = parseInt(minutes, this.radix);
-        this.state.monthly.specificDay.seconds = parseInt(seconds, this.radix);
-        this.state.monthly.specificDay.nearestWeekday = false
+        this.state.monthly = {
+          subTab: 'specificDay',
+          specificDay: {
+            seconds: parseInt(seconds, this.radix),
+            minutes: parseInt(minutes, this.radix),
+            hours: this.getAmPmHour(parsedHours),
+            hourType: this.getHourType(parsedHours),
+            day: dayOfMonth,
+            months: parseInt(month.substring(2), this.radix),
+            nearestWeekday: false,
+          },
+        }
         break;
       }
       case this._monthlySpecificWeekDayRegex.test(cron): {
-        const day = dayOfWeek.substr(0, 3);
-        const monthWeek = dayOfWeek.substr(3);
         this.activeTab = 'monthly';
-        this.state.monthly.subTab = 'specificWeekDay';
-        this.state.monthly.specificWeekDay.monthWeek = monthWeek;
-        this.state.monthly.specificWeekDay.day = day;
-        this.state.monthly.specificWeekDay.months = parseInt(month.substring(2), this.radix);
-        const parsedHours = parseInt(hours, this.radix);
-        this.state.monthly.specificWeekDay.hours = this.getAmPmHour(parsedHours);
-        this.state.monthly.specificWeekDay.hourType = this.getHourType(parsedHours);
-        this.state.monthly.specificWeekDay.minutes = parseInt(minutes, this.radix);
-        this.state.monthly.specificWeekDay.seconds = parseInt(seconds, this.radix);
+        this.state.monthly = {
+          subTab: 'specificWeekDay',
+          specificWeekDay: {
+            seconds: parseInt(seconds, this.radix),
+            minutes: parseInt(minutes, this.radix),
+            hours: this.getAmPmHour(parsedHours),
+            hourType: this.getHourType(parsedHours),
+            day: day,
+            monthWeek: monthWeek,
+            months: parseInt(month.substring(2), this.radix)
+          }
+        }
         break;
       }
       case this._yearlySpecificMonthDayRegex.test(cron): {
         this.activeTab = 'yearly';
-        this.state.yearly.subTab = 'specificMonthDay';
-        this.state.yearly.specificMonthDay.month = parseInt(month, this.radix);
-        this.state.yearly.specificMonthDay.day = dayOfMonth;
-        const parsedHours = parseInt(hours, this.radix);
-        this.state.yearly.specificMonthDay.hours = this.getAmPmHour(parsedHours);
-        this.state.yearly.specificMonthDay.hourType = this.getHourType(parsedHours);
-        this.state.yearly.specificMonthDay.minutes = parseInt(minutes, this.radix);
-        this.state.yearly.specificMonthDay.seconds = parseInt(seconds, this.radix);
-        this.state.yearly.specificMonthDay.nearestWeekday = false
+        this.state.yearly = {
+          subTab: 'specificMonthDay',
+          specificMonthDay: {
+            seconds: parseInt(seconds, this.radix),
+            minutes: parseInt(minutes, this.radix),
+            hours: this.getAmPmHour(parsedHours),
+            hourType: this.getHourType(parsedHours),
+            day: dayOfMonth,
+            month: parseInt(month, this.radix),
+            nearestWeekday: false,
+          }
+        }
         break;
       }
       case this._yearlySpecificMonthWeekRegex.test(cron): {
-        const day = dayOfWeek.substr(0, 3);
-        const monthWeek = dayOfWeek.substr(3);
         this.activeTab = 'yearly';
-        this.state.yearly.subTab = 'specificMonthWeek';
-        this.state.yearly.specificMonthWeek.monthWeek = monthWeek;
-        this.state.yearly.specificMonthWeek.day = day;
-        this.state.yearly.specificMonthWeek.month = parseInt(month, this.radix);
-        const parsedHours = parseInt(hours, this.radix);
-        this.state.yearly.specificMonthWeek.hours = this.getAmPmHour(parsedHours);
-        this.state.yearly.specificMonthWeek.hourType = this.getHourType(parsedHours);
-        this.state.yearly.specificMonthWeek.minutes = parseInt(minutes, this.radix);
-        this.state.yearly.specificMonthWeek.seconds = parseInt(seconds, this.radix);
+        this.state.yearly = {
+          subTab: 'specificMonthWeek',
+          specificMonthWeek: {
+            seconds: parseInt(seconds, this.radix),
+            minutes: parseInt(minutes, this.radix),
+            hours: this.getAmPmHour(parsedHours),
+            hourType: this.getHourType(parsedHours),
+            day: day,
+            month: parseInt(month, this.radix),
+            monthWeek: monthWeek,
+          }
+        }
         break;
       }
       default: { // Advanced
@@ -548,8 +569,8 @@ export class CronGenComponent implements OnInit, ControlValueAccessor {
         seconds: 0
       },
       daily: {
-        subTab: 'everyDays',
-        everyDays: {
+        subTab: 'everyDay',
+        everyDay: {
           days: 1,
           hours: this.getAmPmHour(defaultHours),
           minutes: defaultMinutes,

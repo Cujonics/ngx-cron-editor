@@ -32,11 +32,11 @@
         <mat-radio-group class="cron-editor-radio-group" formControlName="subTab">
 
           <!-- Day Frequency -->
-          <mat-radio-button name="subTab" [ngClass]="options?.formRadioClass || 'cron-editor-radio-button frequency-group'" value="everyDays"
+          <mat-radio-button name="subTab" [ngClass]="options?.formRadioClass || 'cron-editor-radio-button frequency-group'" value="everyDay"
                             checked="checked">
             <p class="cron-form-label">{{options?.texts?.frequencyPrefix || 'Every'}} </p>
 
-            <mat-form-field formGroupName="everyDays" class="day-picker col-md-4">
+            <mat-form-field formGroupName="everyDay" class="day-picker col-md-4">
               <mat-label>Day(s)</mat-label>
               <mat-select formControlName="days">
                 <mat-option *ngFor="let monthDay of selectOptions.monthDays" [value]="monthDay">
@@ -48,7 +48,7 @@
             <p class="cron-form-label">{{options?.texts?.timePrefix || 'at'}} </p>
 
             <cron-time-picker
-              formGroupName="everyDays"
+              formGroupName="everyDay"
               [use24HourTime]="options?.use24HourTime"
               [hideSeconds]="options?.hideSeconds || !isCronFlavorQuartz">
             </cron-time-picker>
