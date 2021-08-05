@@ -17,6 +17,7 @@
   margin-top: 10px;
   overflow: hidden;
   height: 200px;
+  max-width: 700px;
   border-radius: 8px;
   margin-right: 10px;
   h2 {
@@ -117,5 +118,22 @@
   .monthly-content cron-time-picker .mat-form-field,
   .yearly-content cron-time-picker .mat-form-field {
     max-width: 75px;
+  }
+
+  .cron-editor-wrapped-radio {
+    max-width: 95%;
+    margin-bottom: 10px;
+
+    .mat-form-field-wrapper {
+      padding-bottom: 0.5em;
+    }
+
+    .mat-radio-label-content {
+      flex-wrap: wrap;
+    }
+    .mat-radio-container {
+      position: relative;
+      bottom: 6px;
+    }
   }
 }

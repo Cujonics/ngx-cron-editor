@@ -102,9 +102,9 @@
 
           <!-- Specific day -->
           <mat-radio-button name="monthly-radio"
-                            [ngClass]="options?.formRadioClass || 'cron-editor-radio-button frequency-group'"
+                            [ngClass]="options?.formRadioClass || 'cron-editor-radio-button frequency-group cron-editor-wrapped-radio'"
                             value="specificDay" formGroupName="specificDay">
-              <p class="cron-form-label">{{ options?.texts?.specificDayPrefix || 'On the'}}</p>
+            <p class="cron-form-label">{{ options?.texts?.specificDayPrefix || 'On the'}}</p>
 
             <mat-form-field class="day-picker">
               <mat-label>Day</mat-label>
@@ -206,7 +206,9 @@
         <mat-radio-group formControlName="subTab">
 
           <!-- Specific Month Day -->
-          <mat-radio-button name="yearly-radio"  [ngClass]="options?.formRadioClass || 'cron-editor-radio-button frequency-group'" value="specificMonthDay">
+          <mat-radio-button name="yearly-radio"
+                            [ngClass]="options?.formRadioClass || 'cron-editor-radio-button frequency-group cron-editor-wrapped-radio'"
+                            value="specificMonthDay">
             <p class="cron-form-label">{{ options?.texts?.specificDayPrefix || 'On the'}}</p>
 
             <mat-form-field class="day-picker" formGroupName="specificMonthDay" *ngIf="options?.cronFlavor === 'quartz'">
