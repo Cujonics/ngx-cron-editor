@@ -35,7 +35,7 @@ export class AppComponent implements OnInit {
   };
 
   demoOptions = ['hideMinutesTab', 'hideHourlyTab', 'hideDailyTab', 'hideWeeklyTab', 'hideYearlyTab', 'hideAdvancedTab',
-    'hideSpecificWeekDayTab', 'hideSpecificMonthWeekTab', 'hideNearestWeekdayCheck', 'use24HourTime', 'hideSeconds', 'removeSeconds', 'removeYears'
+    'hideSpecificWeekDayTab', 'hideSpecificMonthWeekTab', 'hideNearestWeekdayCheck', 'use24HourTime', 'hideSeconds', 'removeSeconds', 'removeYears', 'hideSelectSuffixes'
   ]
 
   @ViewChild('cronEditorDemo')

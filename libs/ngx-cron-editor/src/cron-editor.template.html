@@ -40,7 +40,7 @@
               <mat-label>Day(s)</mat-label>
               <mat-select formControlName="days">
                 <mat-option *ngFor="let monthDay of selectOptions.monthDays" [value]="monthDay">
-                  {{monthDay}} day(s)
+                  {{monthDay}} {{hideSelectSuffixes ? '' : 'day(s)'}}
                 </mat-option>
               </mat-select>
             </mat-form-field>
@@ -109,17 +109,17 @@
             <mat-form-field class="day-picker">
               <mat-label>Day</mat-label>
               <mat-select class="month-days" formControlName="day">
-                <ng-container *ngIf="options?.cronFlavor === 'quartz'">
-                  <option *ngFor="let monthDaysWithLast of selectOptions.monthDaysWithLasts"
+                <ng-container *ngIf="isCronFlavorQuartz">
+                  <mat-option *ngFor="let monthDaysWithLast of selectOptions.monthDaysWithLasts"
                           [value]="monthDaysWithLast">
-                    {{ monthDayDisplay(monthDaysWithLast) + ' day' }}
-                  </option>
+                    {{ monthDayDisplay(monthDaysWithLast)}} {{hideSelectSuffixes ? '' : 'day'}}
+                  </mat-option>
                 </ng-container>
 
-                <ng-container *ngIf="options?.cronFlavor === 'standard'">
+                <ng-container *ngIf="!isCronFlavorQuartz">
                   <mat-option *ngFor="let monthDaysWithOutLast of selectOptions.monthDaysWithOutLasts"
                               [value]="monthDaysWithOutLast">
-                    {{ monthDayDisplay(monthDaysWithOutLast) + ' day' }}
+                    {{ monthDayDisplay(monthDaysWithOutLast)}} {{hideSelectSuffixes ? '' : 'day'}}
                   </mat-option>
                 </ng-container>
 
@@ -133,7 +133,7 @@
               <mat-label>Month</mat-label>
               <mat-select class="months-small" formControlName="months" [ngClass]="options?.formSelectClass || 'form-control cron-editor-input'">
                 <mat-option *ngFor="let month of selectOptions.months" [value]="month">
-                  {{month + ' month(s)'}}
+                  {{month}} {{hideSelectSuffixes ? '' : 'month(s)'}}
                 </mat-option>
               </mat-select>
             </mat-form-field>
@@ -183,7 +183,7 @@
               <mat-label>Month</mat-label>
               <mat-select class="months-small" formControlName="months">
                 <mat-option *ngFor="let month of selectOptions.months" [value]="month">
-                  {{month + ' month(s)'}}
+                  {{month}} {{hideSelectSuffixes ? '' : 'month(s)'}}
                 </mat-option>
               </mat-select>
             </mat-form-field>
